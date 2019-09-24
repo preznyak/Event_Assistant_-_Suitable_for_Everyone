@@ -36,13 +36,13 @@ public class TestCicaController {
 
     @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, value = "/testcica/update/{id}")
     public ResponseEntity<?> updateCicaById(@PathVariable Long id,@RequestBody TestCica testCica) {
-        TestCica oldcica = testCicaRepositoryInterface.findById(id).orElse(null);
-        if(oldcica == null){
+        TestCica cicaToBeUpdated = testCicaRepositoryInterface.findById(id).orElse(null);
+        if(cicaToBeUpdated == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        oldcica.setName(testCica.getName());
-        oldcica.setBirthDay(testCica.getBirthDay());
-        testCicaRepositoryInterface.save(oldcica);
+        cicaToBeUpdated.setName(testCica.getName());
+        cicaToBeUpdated.setBirthDay(testCica.getBirthDay());
+        testCicaRepositoryInterface.save(cicaToBeUpdated);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
