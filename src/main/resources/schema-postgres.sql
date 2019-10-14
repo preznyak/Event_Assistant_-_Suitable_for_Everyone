@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS authorities;
+
 CREATE TABLE authorities (
     email VARCHAR(50) NOT NULL,
     authority VARCHAR(50) NOT NULL,
