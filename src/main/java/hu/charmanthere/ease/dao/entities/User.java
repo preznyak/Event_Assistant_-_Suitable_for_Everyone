@@ -1,4 +1,4 @@
-package hu.charmanthere.ease.user;
+package hu.charmanthere.ease.dao.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

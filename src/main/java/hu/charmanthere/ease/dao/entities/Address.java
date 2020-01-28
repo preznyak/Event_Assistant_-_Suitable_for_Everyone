@@ -1,4 +1,6 @@
-package hu.charmanthere.ease.user;
+package hu.charmanthere.ease.dao.entities;
+
+import hu.charmanthere.ease.dao.entities.User;
 
 import javax.persistence.*;
 
