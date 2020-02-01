@@ -1,8 +1,7 @@
 package hu.charmanthere.ease.dao.entities;
 
-import hu.charmanthere.ease.dao.entities.User;
-
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "address")
 @Table(name = "addresses")
@@ -11,9 +10,6 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long addressId;
-
-    @OneToOne
-    private User user;
 
     private String houseNumber;
     private String streetName;
@@ -31,14 +27,6 @@ public class Address {
 
     public void setAddressId(Long addressId) {
         this.addressId = addressId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getHouseNumber() {
@@ -87,5 +75,30 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return addressId.equals(address.addressId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(addressId);
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "houseNumber='" + houseNumber + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", country='" + country + '\'' +
+                '}';
     }
 }
