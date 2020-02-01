@@ -1,11 +1,14 @@
 package hu.charmanthere.ease.dao.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity(name = "address")
 @Table(name = "addresses")
-public class Address {
+public class Address implements Serializable {
+
+    private static final long serialVersionUID = -113146L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

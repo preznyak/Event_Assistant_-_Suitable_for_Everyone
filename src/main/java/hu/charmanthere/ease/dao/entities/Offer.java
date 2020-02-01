@@ -3,13 +3,16 @@ package hu.charmanthere.ease.dao.entities;
 import hu.charmanthere.ease.dao.enums.PaymentMethod;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity(name = "offer")
 @Table(name = "offers")
-public class Offer {
+public class Offer implements Serializable {
+
+    private static final long serialVersionUID = 1964846L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

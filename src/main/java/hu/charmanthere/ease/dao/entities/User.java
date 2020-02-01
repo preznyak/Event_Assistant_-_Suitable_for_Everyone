@@ -2,13 +2,16 @@ package hu.charmanthere.ease.dao.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "user")
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 456456L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,8 +27,6 @@ public class User {
 
     private String password;
 
-    private LocalDate birthDate;
-
     private LocalDate lastLoginDate;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -34,7 +35,7 @@ public class User {
     @OneToOne(fetch = FetchType.EAGER, cascade =  CascadeType.ALL)
     private UserDetails userDetails;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Contact contact;
 
     public User() {
@@ -78,14 +79,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
     }
 
     public LocalDate getLastLoginDate() {

@@ -3,13 +3,16 @@ package hu.charmanthere.ease.dao.entities;
 import hu.charmanthere.ease.dao.enums.EventCategory;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "event")
 @Table(name = "events")
-public class Event {
+public class Event implements Serializable {
+
+    private static final long serialVersionUID = -44216L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

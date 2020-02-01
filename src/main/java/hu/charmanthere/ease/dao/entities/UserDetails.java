@@ -1,12 +1,15 @@
 package hu.charmanthere.ease.dao.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity(name = "userDetails")
 @Table(name = "user_details")
-public class UserDetails {
+public class UserDetails implements Serializable {
+
+    private static final long serialVersionUID = -4512356L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -50,8 +53,7 @@ public class UserDetails {
     }
 
     public void setPreferences(String preferences) {
-        this.preferences = preferences;
-    }
+        this.preferences = preferences;}
 
     @Override
     public boolean equals(Object o) {
