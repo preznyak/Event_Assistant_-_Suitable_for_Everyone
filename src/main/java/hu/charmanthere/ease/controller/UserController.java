@@ -1,6 +1,8 @@
 package hu.charmanthere.ease.controller;
 
 import hu.charmanthere.ease.dao.entities.User;
+import hu.charmanthere.ease.exception.UserWithEmailDoesNotExistException;
+import hu.charmanthere.ease.exception.UserWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,19 +40,30 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, value = "/update/{id}")
     public ResponseEntity<?> updateUserById(@PathVariable Long id,@RequestBody User user) {
-        User userToBeUpdated = userService.findById(id);
-        if(userToBeUpdated == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try {
+            userService.update(id, user);
+        } catch (UserWithIdDoesNotExistException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        userToBeUpdated.setEmail(user.getEmail());
-        userToBeUpdated.setPassword(user.getPassword());
-        userService.save(userToBeUpdated);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/email/{email}")
     public ResponseEntity<?> findUserByEmail(@PathVariable String email) {
-        return new ResponseEntity<>(userService.findByEmail(email), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(userService.findByEmail(email), HttpStatus.OK);
+        } catch (UserWithEmailDoesNotExistException e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/id/{id}")
+    public ResponseEntity<?> findUserById(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
+        } catch (UserWithIdDoesNotExistException e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.OK);
+        }
     }
 
     //TODO Service, Offer, Event, Contract, Contact, Guest, Address Controller
