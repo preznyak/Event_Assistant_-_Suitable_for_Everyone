@@ -1,21 +1,25 @@
 package hu.charmanthere.ease.dao.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity(name = "contact")
 @Table(name = "contacts")
-public class Contact {
+@SequenceGenerator(name = "contact_seq")
+public class Contact implements Serializable {
+
+    private static final long serialVersionUID = -6546132L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contact_seq")
     @Column(unique = true, nullable = false)
     private Long contactId;
+
+    private String name;
 
     private String phoneNumber;
 
     private String email;
-
-    private String faxNumber;
 
     private String facebookLink;
 
@@ -28,6 +32,14 @@ public class Contact {
 
     public void setContactId(Long contactId) {
         this.contactId = contactId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhoneNumber() {
@@ -44,14 +56,6 @@ public class Contact {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getFaxNumber() {
-        return faxNumber;
-    }
-
-    public void setFaxNumber(String faxNumber) {
-        this.faxNumber = faxNumber;
     }
 
     public String getFacebookLink() {

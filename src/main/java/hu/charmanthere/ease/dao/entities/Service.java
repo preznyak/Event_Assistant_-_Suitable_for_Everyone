@@ -3,15 +3,19 @@ package hu.charmanthere.ease.dao.entities;
 import hu.charmanthere.ease.dao.enums.ServiceCategory;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "service")
 @Table(name = "services")
-public class Service {
+@SequenceGenerator(name = "service_seq")
+public class Service implements Serializable {
+
+    private static final long serialVersionUID = -9413846L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "service_seq")
     @Column(unique = true, nullable = false)
     private Long serviceId;
 

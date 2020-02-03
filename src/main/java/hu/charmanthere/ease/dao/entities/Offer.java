@@ -3,16 +3,19 @@ package hu.charmanthere.ease.dao.entities;
 import hu.charmanthere.ease.dao.enums.PaymentMethod;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity(name = "offer")
 @Table(name = "offers")
-public class Offer {
+@SequenceGenerator(name = "offer_seq")
+public class Offer implements Serializable {
+
+    private static final long serialVersionUID = 1964846L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "offer_seq")
     private Long offerId;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -33,8 +36,6 @@ public class Offer {
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
-
-    private Boolean isOfferRejected;
 
     private Boolean isOfferAccepted;
 
@@ -108,14 +109,6 @@ public class Offer {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
-    }
-
-    public Boolean getOfferRejected() {
-        return isOfferRejected;
-    }
-
-    public void setOfferRejected(Boolean offerRejected) {
-        isOfferRejected = offerRejected;
     }
 
     public Boolean getOfferAccepted() {

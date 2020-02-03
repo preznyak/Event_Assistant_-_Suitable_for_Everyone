@@ -2,40 +2,31 @@ package hu.charmanthere.ease.dao.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "user")
 @Table(name = "users")
-public class User {
+@SequenceGenerator(name = "user_seq")
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 456456L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     private Long userId;
 
     @Email
     @Column(unique = true, nullable = false)
     private String email;
 
-    private String firstName;
-
-    private String lastName;
-
     private String password;
-
-    private LocalDate birthDate;
 
     private LocalDate lastLoginDate;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Address> addressList;
-
     @OneToOne(fetch = FetchType.EAGER, cascade =  CascadeType.ALL)
     private UserDetails userDetails;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Contact contact;
 
     public User() {
     }
@@ -56,36 +47,12 @@ public class User {
         this.email = email;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
     }
 
     public LocalDate getLastLoginDate() {
@@ -96,28 +63,12 @@ public class User {
         this.lastLoginDate = lastLoginDate;
     }
 
-    public List<Address> getAddressList() {
-        return addressList;
-    }
-
     public UserDetails getUserDetails() {
         return userDetails;
     }
 
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;
-    }
-
-    public void setAddressList(List<Address> addressList) {
-        this.addressList = addressList;
-    }
-
-    public Contact getContact() {
-        return contact;
-    }
-
-    public void setContact(Contact contact) {
-        this.contact = contact;
     }
 
     @Override
@@ -138,8 +89,6 @@ public class User {
     public String toString() {
         return "User{" +
                 "email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
                 '}';
     }
 }

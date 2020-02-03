@@ -1,21 +1,25 @@
 package hu.charmanthere.ease.dao.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity(name = "guest")
 @Table(name = "guests")
-public class Guest {
+@SequenceGenerator(name = "guest_seq")
+public class Guest implements Serializable {
+
+    private static final long serialVersionUID = 123846L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "guest_seq")
     private Long guestId;
 
     private String firstName;
 
     private String lastName;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Contact contact;
 
     private Boolean isInvitationAccepted;

@@ -3,21 +3,23 @@ package hu.charmanthere.ease.dao.entities;
 import hu.charmanthere.ease.dao.enums.PaymentMethod;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity(name = "contract")
 @Table(name = "contracts")
-public class Contract {
+@SequenceGenerator(name = "contract_seq")
+public class Contract implements Serializable {
+
+    private static final long serialVersionUID = 411118L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_seq")
     private Long contractId;
 
     @OneToOne(fetch = FetchType.EAGER)
     private Service service;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    private User user;
 
     @OneToOne(fetch = FetchType.EAGER)
     private Event event;
@@ -59,14 +61,6 @@ public class Contract {
 
     public void setService(Service service) {
         this.service = service;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Event getEvent() {
@@ -142,11 +136,23 @@ public class Contract {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contract contract = (Contract) o;
+        return contractId.equals(contract.contractId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(contractId);
+    }
+
+    @Override
     public String toString() {
         return "Contract{" +
                 "contractId=" + contractId +
                 ", service=" + service +
-                ", user=" + user +
                 '}';
     }
 }

@@ -7,7 +7,7 @@ public enum ServiceCategory {
     PHOTOGRAPHER,
     VIDEO,
     CEREMONYMASTER,
-    PRIES,
+    PRIEST,
     WAITER,
     BARTENDER,
     DECORATION,
