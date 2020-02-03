@@ -1,7 +1,8 @@
 package hu.charmanthere.ease.controller;
 
 import hu.charmanthere.ease.dao.entities.Contact;
-import hu.charmanthere.ease.dao.interfaces.ContactRepositoryInterface;
+import hu.charmanthere.ease.exception.ContactWithIdDoesNotExistException;
+import hu.charmanthere.ease.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,41 +13,47 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/contact")
 public class ContactController{
 
-    private ContactRepositoryInterface contactRepositoryInterface;
+    private ContactService contactService;
 
     @Autowired
-    public ContactController(ContactRepositoryInterface contactRepositoryInterface) {
-        this.contactRepositoryInterface = contactRepositoryInterface;
+    public ContactController(ContactService contactService) {
+        this.contactService = contactService;
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
     public ResponseEntity<?> findAllContact() {
-        return new ResponseEntity<>(contactRepositoryInterface.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(contactService.findAll(), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(contactService.findById(id), HttpStatus.OK);
+        } catch (ContactWithIdDoesNotExistException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<?> createContact(@RequestBody Contact contact) {
-        contactRepositoryInterface.save(contact);
+        contactService.save(contact);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, value = "/update/{id}")
     public ResponseEntity<?> updateContactById(@PathVariable Long id,@RequestBody Contact contact) {
-        Contact contactToBeUpdated = contactRepositoryInterface.findById(id).orElse(null);
-        if(contactToBeUpdated == null){
+        try {
+            contactService.update(id,contact);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ContactWithIdDoesNotExistException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        contactToBeUpdated.setEmail(contact.getEmail());
-        contactToBeUpdated.setName(contact.getName());
-        contactToBeUpdated.setFacebookLink(contact.getFacebookLink());
-        contactToBeUpdated.setPhoneNumber(contact.getPhoneNumber());
-        contactRepositoryInterface.save(contactToBeUpdated);
-        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/delete/{contactId}")
     public ResponseEntity<?> deleteContactByUserId(@PathVariable Long contactId) {
-        contactRepositoryInterface.deleteById(contactId);
+        contactService.deleteById(contactId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
