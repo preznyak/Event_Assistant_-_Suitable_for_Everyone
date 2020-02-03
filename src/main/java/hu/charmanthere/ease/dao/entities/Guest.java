@@ -6,12 +6,13 @@ import java.util.Objects;
 
 @Entity(name = "guest")
 @Table(name = "guests")
+@SequenceGenerator(name = "guest_seq")
 public class Guest implements Serializable {
 
     private static final long serialVersionUID = 123846L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "guest_seq")
     private Long guestId;
 
     private String firstName;

@@ -10,12 +10,13 @@ import java.util.Objects;
 
 @Entity(name = "event")
 @Table(name = "events")
+@SequenceGenerator(name = "event_seq")
 public class Event implements Serializable {
 
     private static final long serialVersionUID = -44216L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_seq")
     private Long eventId;
 
     private String eventName;

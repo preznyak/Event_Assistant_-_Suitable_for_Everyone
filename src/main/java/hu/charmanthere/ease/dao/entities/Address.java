@@ -6,12 +6,13 @@ import java.util.Objects;
 
 @Entity(name = "address")
 @Table(name = "addresses")
+@SequenceGenerator(name = "address_seq")
 public class Address implements Serializable {
 
     private static final long serialVersionUID = -113146L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
     private Long addressId;
 
     private String houseNumber;

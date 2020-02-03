@@ -9,12 +9,13 @@ import java.util.Objects;
 
 @Entity(name = "service")
 @Table(name = "services")
+@SequenceGenerator(name = "service_seq")
 public class Service implements Serializable {
 
     private static final long serialVersionUID = -9413846L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "service_seq")
     @Column(unique = true, nullable = false)
     private Long serviceId;
 
@@ -24,7 +25,7 @@ public class Service implements Serializable {
 
     private String homePage;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

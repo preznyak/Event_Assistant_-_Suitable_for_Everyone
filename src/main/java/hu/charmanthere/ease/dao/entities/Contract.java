@@ -9,19 +9,17 @@ import java.util.Objects;
 
 @Entity(name = "contract")
 @Table(name = "contracts")
+@SequenceGenerator(name = "contract_seq")
 public class Contract implements Serializable {
 
     private static final long serialVersionUID = 411118L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_seq")
     private Long contractId;
 
     @OneToOne(fetch = FetchType.EAGER)
     private Service service;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    private User user;
 
     @OneToOne(fetch = FetchType.EAGER)
     private Event event;
@@ -63,14 +61,6 @@ public class Contract implements Serializable {
 
     public void setService(Service service) {
         this.service = service;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Event getEvent() {
@@ -163,7 +153,6 @@ public class Contract implements Serializable {
         return "Contract{" +
                 "contractId=" + contractId +
                 ", service=" + service +
-                ", user=" + user +
                 '}';
     }
 }

@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, value = "/update/{id}")
-    public ResponseEntity<?> updateCicaById(@PathVariable Long id,@RequestBody User user) {
+    public ResponseEntity<?> updateUserById(@PathVariable Long id,@RequestBody User user) {
         User userToBeUpdated = userRepositoryInterface.findById(id).orElse(null);
         if(userToBeUpdated == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -52,5 +52,7 @@ public class UserController {
     public ResponseEntity<?> findUserByEmail(@PathVariable String email) {
         return new ResponseEntity<>(userRepositoryInterface.findByEmail(email), HttpStatus.OK);
     }
+
+    //TODO Service, Offer, Event, Contract, Contact, Guest, Address Controller
 
 }
