@@ -25,7 +25,7 @@ public class Service implements Serializable {
 
     private String homePage;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

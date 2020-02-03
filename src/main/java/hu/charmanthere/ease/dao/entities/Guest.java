@@ -19,7 +19,7 @@ public class Guest implements Serializable {
 
     private String lastName;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Contact contact;
 
     private Boolean isInvitationAccepted;

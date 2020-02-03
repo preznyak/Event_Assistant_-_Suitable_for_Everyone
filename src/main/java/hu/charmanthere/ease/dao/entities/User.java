@@ -25,7 +25,7 @@ public class User implements Serializable {
 
     private LocalDate lastLoginDate;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade =  CascadeType.ALL)
     private UserDetails userDetails;
 
     public User() {
