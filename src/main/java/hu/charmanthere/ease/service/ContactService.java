@@ -2,7 +2,7 @@ package hu.charmanthere.ease.service;
 
 import hu.charmanthere.ease.dao.entities.Contact;
 import hu.charmanthere.ease.dao.interfaces.ContactRepositoryInterface;
-import hu.charmanthere.ease.exception.ContactWithIdDoesNotExist;
+import hu.charmanthere.ease.exception.ContactWithIdDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +23,11 @@ public class ContactService {
         return contactRepositoryInterface.findAll();
     }
 
-    public Contact findById(Long id) throws ContactWithIdDoesNotExist {
+    public Contact findById(Long id) throws ContactWithIdDoesNotExistException {
         Contact contact = contactRepositoryInterface.findById(id).orElse(null);
         if(contact == null){
             System.out.println("Contact with "+ id + " does not exist!");
-            throw new ContactWithIdDoesNotExist("Contact with "+ id + " does not exist!");
+            throw new ContactWithIdDoesNotExistException("Contact with "+ id + " does not exist!");
         }
         return contact;
     }
@@ -36,11 +36,11 @@ public class ContactService {
         contactRepositoryInterface.save(contact);
     }
 
-    public void update(Long id, Contact contact) throws ContactWithIdDoesNotExist {
+    public void update(Long id, Contact contact) throws ContactWithIdDoesNotExistException {
         Contact contactToBeUpdated = contactRepositoryInterface.findById(id).orElse(null);
         if(contact == null){
             System.out.println("Contact with "+ id + " does not exist!");
-            throw new ContactWithIdDoesNotExist("Contact with "+ id + " does not exist!");
+            throw new ContactWithIdDoesNotExistException("Contact with "+ id + " does not exist!");
         }
         contactToBeUpdated.setEmail(contact.getEmail());
         contactToBeUpdated.setName(contact.getName());

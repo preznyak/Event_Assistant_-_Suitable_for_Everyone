@@ -1,8 +1,7 @@
 package hu.charmanthere.ease.controller;
 
 import hu.charmanthere.ease.dao.entities.Contact;
-import hu.charmanthere.ease.dao.interfaces.ContactRepositoryInterface;
-import hu.charmanthere.ease.exception.ContactWithIdDoesNotExist;
+import hu.charmanthere.ease.exception.ContactWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +29,7 @@ public class ContactController{
     public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(contactService.findById(id), HttpStatus.OK);
-        } catch (ContactWithIdDoesNotExist e) {
+        } catch (ContactWithIdDoesNotExistException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
         }
     }
@@ -46,7 +45,7 @@ public class ContactController{
         try {
             contactService.update(id,contact);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (ContactWithIdDoesNotExist contactWithIdDoesNotExist) {
+        } catch (ContactWithIdDoesNotExistException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

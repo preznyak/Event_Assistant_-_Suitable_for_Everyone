@@ -2,6 +2,9 @@ package hu.charmanthere.ease.controller;
 
 import hu.charmanthere.ease.dao.entities.Contract;
 import hu.charmanthere.ease.dao.interfaces.ContractRepositoryInterface;
+import hu.charmanthere.ease.exception.ContactWithIdDoesNotExistException;
+import hu.charmanthere.ease.exception.ContractWithIdDoesNotExistException;
+import hu.charmanthere.ease.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,45 +14,47 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/contract")
 public class ContractController {
-    private ContractRepositoryInterface contractRepositoryInterface;
+    private ContractService contractService;
 
     @Autowired
-    public ContractController(ContractRepositoryInterface contractRepositoryInterface) {
-        this.contractRepositoryInterface = contractRepositoryInterface;
+    public ContractController(ContractService contractService) {
+        this.contractService = contractService;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/delete/{contractId}")
     public ResponseEntity<?> deleteContractByContractId(@PathVariable Long contractId) {
-        contractRepositoryInterface.deleteById(contractId);
+        contractService.deleteById(contractId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<?> createContract(@RequestBody Contract contract) {
-        contractRepositoryInterface.save(contract);
+        contractService.save(contract);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
     public ResponseEntity<?> findAllContract() {
-        return new ResponseEntity<>(contractRepositoryInterface.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(contractService.findAll(), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/{id}")
+    public ResponseEntity<?> findAllContract(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(contractService.findById(id), HttpStatus.OK);
+        } catch (ContractWithIdDoesNotExistException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/update/{contractId}")
     public ResponseEntity<?> updateContractById(@PathVariable Long contractId, @RequestBody Contract contract) {
-        Contract contractToBeUpdated = contractRepositoryInterface.findById(contractId).orElse(null);
-        if (contractToBeUpdated == null) {
+        try {
+            contractService.update(contractId,contract);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ContractWithIdDoesNotExistException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        contractToBeUpdated.setDeposit(contract.getDeposit());
-        contractToBeUpdated.setDepositPayed(contract.getDepositPayed());
-        contractToBeUpdated.setDepositPaymentTime(contract.getDepositPaymentTime());
-        contractToBeUpdated.setDescription(contract.getDescription());
-        contractToBeUpdated.setPaymentMethod(contract.getPaymentMethod());
-        contractToBeUpdated.setPrice(contract.getPrice());
-        contractToBeUpdated.setPricePayed(contract.getPricePayed());
-        contractToBeUpdated.setPricePaymentTime(contract.getPricePaymentTime());
-        contractRepositoryInterface.save(contractToBeUpdated);
-        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 }
