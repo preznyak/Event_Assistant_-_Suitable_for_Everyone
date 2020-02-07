@@ -1,7 +1,7 @@
 package hu.charmanthere.ease.controller;
 
-import hu.charmanthere.ease.dao.entities.Service;
-import hu.charmanthere.ease.dao.entities.User;
+import hu.charmanthere.ease.dao.entity.Service;
+import hu.charmanthere.ease.dao.entity.User;
 import hu.charmanthere.ease.service.ServiceService;
 import hu.charmanthere.ease.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,25 +25,25 @@ public class UserManagementController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/delete/user")
     public ResponseEntity<?> deleteUser(@RequestBody User user) {
-        userService.deleteById(userId);
+        userService.deleteById(user.getUserId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/delete/service")
     public ResponseEntity<?> deleteService(@RequestBody Service service) {
-        userService.deleteById(userId);
+        userService.deleteById(service.getServiceId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create/user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        userService.(userId);
+        userService.create(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create/service")
     public ResponseEntity<?> createService(@RequestBody Service service) {
-        userService.deleteById(userId);
+        userService.deleteById(service.getServiceId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
