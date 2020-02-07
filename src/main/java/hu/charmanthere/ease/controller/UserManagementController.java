@@ -1,6 +1,5 @@
 package hu.charmanthere.ease.controller;
 
-import hu.charmanthere.ease.dao.entity.Service;
 import hu.charmanthere.ease.dao.entity.User;
 import hu.charmanthere.ease.service.ServiceService;
 import hu.charmanthere.ease.service.UserService;
@@ -14,12 +13,10 @@ import org.springframework.web.bind.annotation.*;
 public class UserManagementController {
 
     private UserService userService;
-    private ServiceService serviceService;
 
     @Autowired
-    public UserManagementController(UserService userService, ServiceService serviceService) {
+    public UserManagementController(UserService userService) {
         this.userService = userService;
-        this.serviceService = serviceService;
     }
 
 
@@ -29,21 +26,9 @@ public class UserManagementController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/delete/service")
-    public ResponseEntity<?> deleteService(@RequestBody Service service) {
-        userService.deleteById(service.getServiceId());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @RequestMapping(method = RequestMethod.POST, value = "/create/user")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         userService.create(user);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/create/service")
-    public ResponseEntity<?> createService(@RequestBody Service service) {
-        userService.deleteById(service.getServiceId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
