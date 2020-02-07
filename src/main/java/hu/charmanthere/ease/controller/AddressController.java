@@ -2,7 +2,7 @@ package hu.charmanthere.ease.controller;
 
 import hu.charmanthere.ease.dao.entity.Address;
 import hu.charmanthere.ease.exception.AddressWithIdDoesNotExistException;
-import hu.charmanthere.ease.dao.implementation.AddressDaoImpl;
+import hu.charmanthere.ease.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/address")
 public class AddressController {
 
-    private AddressDaoImpl addressDaoImpl;
+    private AddressService addressService;
 
     @Autowired
-    public AddressController(AddressDaoImpl addressDaoImpl) {
-        this.addressDaoImpl = addressDaoImpl;
+    public AddressController(AddressService addressService) {
+        this.addressService = addressService;
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
     public ResponseEntity<?> findAllAddress() {
-        return new ResponseEntity<>(addressDaoImpl.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(addressService.findAllAddress(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(addressDaoImpl.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(addressService.findById(id), HttpStatus.OK);
         } catch (AddressWithIdDoesNotExistException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
         }
@@ -36,14 +36,14 @@ public class AddressController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<?> createAddress(@RequestBody Address address) {
-        addressDaoImpl.save(address);
+        addressService.createAddress(address);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, value = "/update/{id}")
     public ResponseEntity<?> updateAddressById(@PathVariable Long id, @RequestBody Address address) {
         try {
-            addressDaoImpl.update(id, address);
+            addressService.update(id, address);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (AddressWithIdDoesNotExistException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -52,7 +52,7 @@ public class AddressController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/delete/{addressId}")
     public ResponseEntity<?> deleteAddressByUserId(@PathVariable Long addressId) {
-        addressDaoImpl.deleteById(addressId);
+        addressService.deleteById(addressId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
