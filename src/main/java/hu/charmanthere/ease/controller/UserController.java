@@ -3,7 +3,7 @@ package hu.charmanthere.ease.controller;
 import hu.charmanthere.ease.dao.entity.User;
 import hu.charmanthere.ease.exception.UserWithEmailDoesNotExistException;
 import hu.charmanthere.ease.exception.UserWithIdDoesNotExistException;
-import hu.charmanthere.ease.dao.implementation.UserDaoImpl;
+import hu.charmanthere.ease.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,34 +14,34 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserController {
 
-    private UserDaoImpl userDaoImpl;
+    private UserService userService;
 
     @Autowired
-    public UserController(UserDaoImpl userDaoImpl) {
-        this.userDaoImpl = userDaoImpl;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/delete/{userId}")
     public ResponseEntity<?> deleteUserByUserId(@PathVariable Long userId) {
-        userDaoImpl.deleteById(userId);
+        userService.deleteById(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        userDaoImpl.save(user);
+        userService.create(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
     public ResponseEntity<?> findAllUser() {
-        return new ResponseEntity<>(userDaoImpl.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, value = "/update/{id}")
     public ResponseEntity<?> updateUserById(@PathVariable Long id,@RequestBody User user) {
         try {
-            userDaoImpl.update(id, user);
+            userService.update(id, user);
         } catch (UserWithIdDoesNotExistException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -51,7 +51,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/email/{email}")
     public ResponseEntity<?> findUserByEmail(@PathVariable String email) {
         try {
-            return new ResponseEntity<>(userDaoImpl.findByEmail(email), HttpStatus.OK);
+            return new ResponseEntity<>(userService.findByEmail(email), HttpStatus.OK);
         } catch (UserWithEmailDoesNotExistException e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.OK);
         }
@@ -60,7 +60,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/id/{id}")
     public ResponseEntity<?> findUserById(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(userDaoImpl.findById(id), HttpStatus.OK);
+            return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
         } catch (UserWithIdDoesNotExistException e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.OK);
         }
