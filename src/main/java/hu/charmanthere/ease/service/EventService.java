@@ -1,55 +1,38 @@
 package hu.charmanthere.ease.service;
 
-import hu.charmanthere.ease.dao.entities.Event;
-import hu.charmanthere.ease.dao.interfaces.EventRepositoryInterface;
+import hu.charmanthere.ease.dao.entity.Event;
+import hu.charmanthere.ease.dao.implementation.EventDaoImpl;
 import hu.charmanthere.ease.exception.EventWithIdDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-
 @Service
 public class EventService {
-    private EventRepositoryInterface eventRepositoryInterface;
+    public EventDaoImpl eventDao;
 
     @Autowired
-    public EventService(EventRepositoryInterface eventRepositoryInterface) {
-        this.eventRepositoryInterface = eventRepositoryInterface;
+    public EventService(EventDaoImpl eventDao) {
+        this.eventDao = eventDao;
     }
 
-    public void deleteById(Long eventId) {
-        eventRepositoryInterface.deleteById(eventId);
-    }
-
-    public void save(Event event) {
-        eventRepositoryInterface.save(event);
-    }
-
-    public List<Event> findAll() {
-        return eventRepositoryInterface.findAll();
+    public List<Event> findAllEvent() {
+        return eventDao.findAll();
     }
 
     public Event findById(Long id) throws EventWithIdDoesNotExistException {
-        Event event = eventRepositoryInterface.findById(id).orElse(null);
-        if(event == null){
-            System.out.println("Event with id : " +id+ " does not exist!");
-            throw new EventWithIdDoesNotExistException("Event with id : " +id+ " does not exist!");
-        }
-        return event;
+        return eventDao.findById(id);
     }
 
-    public void update(Long eventId, Event event) throws EventWithIdDoesNotExistException {
-        Event eventToBeUpdated = eventRepositoryInterface.findById(eventId).orElse(null);
-        if(event == null){
-            System.out.println("Event with id : " +eventId+ " does not exist!");
-            throw new EventWithIdDoesNotExistException("Event with id : " +eventId+ " does not exist!");
-        }
-        eventToBeUpdated.setContractList(event.getContractList());
-        eventToBeUpdated.setEventCategory(event.getEventCategory());
-        eventToBeUpdated.setEventDetails(event.getEventDetails());
-        eventToBeUpdated.setEventName(event.getEventName());
-        eventToBeUpdated.setPlace(event.getPlace());
-        eventRepositoryInterface.save(eventToBeUpdated);
+    public void createEvent(Event event) {
+        eventDao.save(event);
+    }
+
+    public void update(Long id, Event event) throws EventWithIdDoesNotExistException {
+        eventDao.update(id,event);
+    }
+
+    public void deleteById(Long id) {
+        eventDao.deleteById(id);
     }
 }

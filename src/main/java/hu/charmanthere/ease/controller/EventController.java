@@ -1,7 +1,6 @@
 package hu.charmanthere.ease.controller;
 
-import hu.charmanthere.ease.dao.entities.Event;
-import hu.charmanthere.ease.dao.interfaces.EventRepositoryInterface;
+import hu.charmanthere.ease.dao.entity.Event;
 import hu.charmanthere.ease.exception.EventWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +27,13 @@ public class EventController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<?> createEvent(@RequestBody Event event) {
-        eventService.save(event);
+        eventService.createEvent(event);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
     public ResponseEntity<?> findAllEvent() {
-        return new ResponseEntity<>(eventService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(eventService.findAllEvent(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/{id}")

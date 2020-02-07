@@ -1,55 +1,38 @@
 package hu.charmanthere.ease.service;
 
-import hu.charmanthere.ease.dao.entities.Contact;
-import hu.charmanthere.ease.dao.interfaces.ContactRepositoryInterface;
+import hu.charmanthere.ease.dao.entity.Contact;
+import hu.charmanthere.ease.dao.implementation.ContactDaoImpl;
 import hu.charmanthere.ease.exception.ContactWithIdDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
-
 public class ContactService {
-
-    private ContactRepositoryInterface contactRepositoryInterface;
+    public ContactDaoImpl contactDao;
 
     @Autowired
-    public ContactService(ContactRepositoryInterface contactRepositoryInterface) {
-        this.contactRepositoryInterface = contactRepositoryInterface;
+    public ContactService(ContactDaoImpl contactDao) {
+        this.contactDao = contactDao;
     }
 
-    public List<Contact> findAll() {
-        return contactRepositoryInterface.findAll();
+    public List<Contact> findAllContact() {
+        return contactDao.findAll();
     }
 
     public Contact findById(Long id) throws ContactWithIdDoesNotExistException {
-        Contact contact = contactRepositoryInterface.findById(id).orElse(null);
-        if(contact == null){
-            System.out.println("Contact with "+ id + " does not exist!");
-            throw new ContactWithIdDoesNotExistException("Contact with "+ id + " does not exist!");
-        }
-        return contact;
+        return contactDao.findById(id);
     }
 
-    public void save(Contact contact) {
-        contactRepositoryInterface.save(contact);
+    public void createContact(Contact contact) {
+        contactDao.save(contact);
     }
 
     public void update(Long id, Contact contact) throws ContactWithIdDoesNotExistException {
-        Contact contactToBeUpdated = contactRepositoryInterface.findById(id).orElse(null);
-        if(contact == null){
-            System.out.println("Contact with "+ id + " does not exist!");
-            throw new ContactWithIdDoesNotExistException("Contact with "+ id + " does not exist!");
-        }
-        contactToBeUpdated.setEmail(contact.getEmail());
-        contactToBeUpdated.setName(contact.getName());
-        contactToBeUpdated.setFacebookLink(contact.getFacebookLink());
-        contactToBeUpdated.setPhoneNumber(contact.getPhoneNumber());
-        contactRepositoryInterface.save(contactToBeUpdated);
+        contactDao.update(id,contact);
     }
 
-    public void deleteById(Long contactId) {
-        contactRepositoryInterface.deleteById(contactId);
+    public void deleteById(Long id) {
+        contactDao.deleteById(id);
     }
 }

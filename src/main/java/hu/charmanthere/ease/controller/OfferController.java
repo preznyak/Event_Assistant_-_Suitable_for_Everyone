@@ -1,7 +1,6 @@
 package hu.charmanthere.ease.controller;
 
-import hu.charmanthere.ease.dao.entities.Offer;
-import hu.charmanthere.ease.dao.interfaces.OfferRepositoryInterface;
+import hu.charmanthere.ease.dao.entity.Offer;
 import hu.charmanthere.ease.exception.OfferWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,19 +27,19 @@ public class OfferController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<?> createOffer(@RequestBody Offer Offer) {
-        offerService.create(Offer);
+        offerService.createOffer(Offer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
     public ResponseEntity<?> findAllOffer() {
-        return new ResponseEntity<>(offerService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(offerService.findAllOffer(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/update/{OfferId}")
     public ResponseEntity<?> updateOfferById(@PathVariable Long OfferId, @RequestBody Offer offer) {
         try {
-            offerService.updateById(OfferId,offer);
+            offerService.update(OfferId,offer);
         } catch (OfferWithIdDoesNotExistException e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }

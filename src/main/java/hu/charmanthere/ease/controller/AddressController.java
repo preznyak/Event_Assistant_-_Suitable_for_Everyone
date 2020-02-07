@@ -1,6 +1,6 @@
 package hu.charmanthere.ease.controller;
 
-import hu.charmanthere.ease.dao.entities.Address;
+import hu.charmanthere.ease.dao.entity.Address;
 import hu.charmanthere.ease.exception.AddressWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class AddressController {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
     public ResponseEntity<?> findAllAddress() {
-        return new ResponseEntity<>(addressService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(addressService.findAllAddress(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/{id}")
@@ -36,7 +36,7 @@ public class AddressController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<?> createAddress(@RequestBody Address address) {
-        addressService.save(address);
+        addressService.createAddress(address);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

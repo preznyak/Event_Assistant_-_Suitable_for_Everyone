@@ -1,8 +1,6 @@
 package hu.charmanthere.ease.controller;
 
-import hu.charmanthere.ease.dao.entities.Contract;
-import hu.charmanthere.ease.dao.interfaces.ContractRepositoryInterface;
-import hu.charmanthere.ease.exception.ContactWithIdDoesNotExistException;
+import hu.charmanthere.ease.dao.entity.Contract;
 import hu.charmanthere.ease.exception.ContractWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +27,13 @@ public class ContractController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<?> createContract(@RequestBody Contract contract) {
-        contractService.save(contract);
+        contractService.createContract(contract);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
     public ResponseEntity<?> findAllContract() {
-        return new ResponseEntity<>(contractService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(contractService.findAllContract(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/{id}")

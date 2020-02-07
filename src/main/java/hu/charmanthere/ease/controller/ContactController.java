@@ -1,6 +1,6 @@
 package hu.charmanthere.ease.controller;
 
-import hu.charmanthere.ease.dao.entities.Contact;
+import hu.charmanthere.ease.dao.entity.Contact;
 import hu.charmanthere.ease.exception.ContactWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class ContactController{
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
     public ResponseEntity<?> findAllContact() {
-        return new ResponseEntity<>(contactService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(contactService.findAllContact(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/{id}")
@@ -36,7 +36,7 @@ public class ContactController{
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<?> createContact(@RequestBody Contact contact) {
-        contactService.save(contact);
+        contactService.createContact(contact);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

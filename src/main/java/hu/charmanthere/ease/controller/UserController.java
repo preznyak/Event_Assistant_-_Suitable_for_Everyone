@@ -1,6 +1,6 @@
 package hu.charmanthere.ease.controller;
 
-import hu.charmanthere.ease.dao.entities.User;
+import hu.charmanthere.ease.dao.entity.User;
 import hu.charmanthere.ease.exception.UserWithEmailDoesNotExistException;
 import hu.charmanthere.ease.exception.UserWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.UserService;
@@ -29,7 +29,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        userService.save(user);
+        userService.create(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

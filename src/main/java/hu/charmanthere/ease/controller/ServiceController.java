@@ -1,8 +1,6 @@
 package hu.charmanthere.ease.controller;
 
-import hu.charmanthere.ease.dao.entities.Service;
-import hu.charmanthere.ease.dao.entities.User;
-import hu.charmanthere.ease.dao.interfaces.ServiceRepositoryInterface;
+import hu.charmanthere.ease.dao.entity.Service;
 import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +28,19 @@ public class ServiceController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/create")
     public ResponseEntity<?> createService(@RequestBody Service service) {
-        serviceService.create(service);
+        serviceService.createService(service);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
     public ResponseEntity<?> findAllService() {
-        return new ResponseEntity<>(serviceService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(serviceService.findAllService(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, value = "/update/{serviceId}")
     public ResponseEntity<?> updateServiceById(@PathVariable Long serviceId,@RequestBody Service service) {
         try {
-            serviceService.updateById(serviceId,service);
+            serviceService.update(serviceId,service);
         } catch (ServiceWithIdDoesNotExistException e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
