@@ -1,5 +1,6 @@
 package hu.charmanthere.ease.dao.implementation;
 
+import hu.charmanthere.ease.dao.enumeration.ServiceCategory;
 import hu.charmanthere.ease.dao.inteface.ServiceDaoInterface;
 import hu.charmanthere.ease.dao.repository.ServiceRepositoryInterface;
 import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
@@ -43,5 +44,15 @@ public class ServiceDaoImpl implements ServiceDaoInterface {
         serviceToBeUpdated.setName(service.getName());
         serviceToBeUpdated.setServiceCategory(service.getServiceCategory());
         serviceRepositoryInterface.save(serviceToBeUpdated);
+    }
+
+    @Override
+    public List<hu.charmanthere.ease.dao.entity.Service> findServicesByCategory(ServiceCategory category) {
+        return serviceRepositoryInterface.findServiceByServiceCategory(category);
+    }
+
+    @Override
+    public List<hu.charmanthere.ease.dao.entity.Service> findServicesByLocality(String locality) {
+        return serviceRepositoryInterface.findServiceByAddresses_City(locality);
     }
 }

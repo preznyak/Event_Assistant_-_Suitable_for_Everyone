@@ -20,8 +20,6 @@ public class EventDetails implements Serializable {
 
     private String description;
 
-    private EventCategory eventCategory;
-
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
@@ -46,14 +44,6 @@ public class EventDetails implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public EventCategory getEventCategory() {
-        return eventCategory;
-    }
-
-    public void setEventCategory(EventCategory eventCategory) {
-        this.eventCategory = eventCategory;
     }
 
     public LocalDateTime getStartTime() {
@@ -95,8 +85,7 @@ public class EventDetails implements Serializable {
 
     @Override
     public String toString() {
-        return "EventDetails{" +
-                ", eventCategory=" + eventCategory +
+        return "EventDetails{" + eventDetailsId +
                 '}';
     }
 }

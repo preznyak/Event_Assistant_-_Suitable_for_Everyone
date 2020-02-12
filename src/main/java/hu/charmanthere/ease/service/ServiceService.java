@@ -1,6 +1,7 @@
 package hu.charmanthere.ease.service;
 
 import hu.charmanthere.ease.dao.entity.Service;
+import hu.charmanthere.ease.dao.enumeration.ServiceCategory;
 import hu.charmanthere.ease.dao.implementation.ServiceDaoImpl;
 import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,13 @@ public class ServiceService {
 
     public void deleteById(Long id) {
         serviceDao.deleteById(id);
+    }
+
+    public List<Service> findServicesByCategory(ServiceCategory category){
+        return serviceDao.findServicesByCategory(category);
+    }
+
+    public List<Service> findServicesByLocality(String locality){
+        return serviceDao.findServicesByLocality(locality);
     }
 }

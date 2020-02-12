@@ -1,6 +1,7 @@
 package hu.charmanthere.ease.controller;
 
 import hu.charmanthere.ease.dao.entity.Service;
+import hu.charmanthere.ease.dao.enumeration.ServiceCategory;
 import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,4 +47,15 @@ public class ServiceController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/category/{category}")
+    public ResponseEntity<?> findServicesByCategory(@PathVariable ServiceCategory category) {
+        return new ResponseEntity<>(serviceService.findServicesByCategory(category), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/locality/{locality}")
+    public ResponseEntity<?> findServicesByLocality(@PathVariable String locality) {
+        return new ResponseEntity<>(serviceService.findServicesByLocality(locality), HttpStatus.OK);
+    }
+
 }

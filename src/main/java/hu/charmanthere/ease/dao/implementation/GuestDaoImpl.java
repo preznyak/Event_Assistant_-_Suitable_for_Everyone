@@ -2,6 +2,7 @@ package hu.charmanthere.ease.dao.implementation;
 
 import hu.charmanthere.ease.dao.entity.Guest;
 import hu.charmanthere.ease.dao.inteface.EventDaoInterface;
+import hu.charmanthere.ease.dao.inteface.GuestDaoInterface;
 import hu.charmanthere.ease.dao.repository.GuestRepositoryInterface;
 import hu.charmanthere.ease.exception.GuestWithIdDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GuestDaoImpl implements EventDaoInterface {
+public class GuestDaoImpl implements GuestDaoInterface {
 
     private GuestRepositoryInterface guestRepositoryInterface;
 
