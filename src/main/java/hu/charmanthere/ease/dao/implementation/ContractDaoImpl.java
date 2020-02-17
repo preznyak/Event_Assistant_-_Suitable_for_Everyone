@@ -37,7 +37,7 @@ public class ContractDaoImpl implements ContractDaoInterface {
 
     public void update(Long id, Contract contract) throws ContractWithIdDoesNotExistException {
         Contract contractToBeUpdated = contractRepositoryInterface.findById(id).orElse(null);
-        if(contract == null){
+        if(contractToBeUpdated == null){
             System.out.println("Contact with "+ id + " does not exist!");
             throw new ContractWithIdDoesNotExistException("Contact with "+ id + " does not exist!");
         }

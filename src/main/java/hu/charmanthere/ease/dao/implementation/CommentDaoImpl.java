@@ -38,7 +38,7 @@ public class CommentDaoImpl implements CommentDaoInterface {
 
     public void update(Long id, Comment comment) throws CommentWithIdDoesNotExistException {
         Comment commentToBeUpdated = commentRepositoryInterface.findById(id).orElse(null);
-        if(comment == null){
+        if(commentToBeUpdated == null){
             System.out.println("Comment with "+ id + " does not exist!");
             throw new CommentWithIdDoesNotExistException("Comment with "+ id + " does not exist!");
         }
