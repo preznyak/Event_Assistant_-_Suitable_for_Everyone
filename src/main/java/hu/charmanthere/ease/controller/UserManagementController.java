@@ -1,7 +1,7 @@
 package hu.charmanthere.ease.controller;
 
 import hu.charmanthere.ease.dao.entity.User;
-import hu.charmanthere.ease.service.ServiceService;
+import hu.charmanthere.ease.exception.UserValidationException;
 import hu.charmanthere.ease.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,18 +19,20 @@ public class UserManagementController {
         this.userService = userService;
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/create/user")
+    public ResponseEntity<?> createUser(@RequestBody User user){
+        try {
+            userService.create(user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (UserValidationException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/delete/user")
     public ResponseEntity<?> deleteUser(@RequestBody User user) {
         userService.deleteById(user.getUserId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/create/user")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
-        userService.create(user);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-
 }
