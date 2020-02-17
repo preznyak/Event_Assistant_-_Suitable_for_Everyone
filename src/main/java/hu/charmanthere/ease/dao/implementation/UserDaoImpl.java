@@ -30,6 +30,10 @@ public class UserDaoImpl implements UserDaoInterface {
 
     public void update(Long id, User user) throws UserWithIdDoesNotExistException {
         User userToBeUpdated = findById(id);
+        if(userToBeUpdated == null){
+            System.out.println("User with id " + id + " does not exist!");
+            throw new UserWithIdDoesNotExistException("User with id " + id + " does not exist!");
+        }
         userToBeUpdated.setEmail(user.getEmail());
         userToBeUpdated.setPassword(user.getPassword());
         userToBeUpdated.setLastLoginDate(user.getLastLoginDate());

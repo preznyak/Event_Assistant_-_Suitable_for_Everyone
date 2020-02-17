@@ -44,7 +44,7 @@ public class EventDaoImpl implements EventDaoInterface {
 
     public void update(Long eventId, Event event) throws EventWithIdDoesNotExistException {
         Event eventToBeUpdated = eventRepositoryInterface.findById(eventId).orElse(null);
-        if(event == null){
+        if(eventToBeUpdated == null){
             System.out.println("Event with id : " +eventId+ " does not exist!");
             throw new EventWithIdDoesNotExistException("Event with id : " +eventId+ " does not exist!");
         }

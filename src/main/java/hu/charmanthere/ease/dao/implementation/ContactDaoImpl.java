@@ -38,7 +38,7 @@ public class ContactDaoImpl implements ContactDaoInterface {
 
     public void update(Long id, Contact contact) throws ContactWithIdDoesNotExistException {
         Contact contactToBeUpdated = contactRepositoryInterface.findById(id).orElse(null);
-        if(contact == null){
+        if(contactToBeUpdated == null){
             System.out.println("Contact with "+ id + " does not exist!");
             throw new ContactWithIdDoesNotExistException("Contact with "+ id + " does not exist!");
         }
