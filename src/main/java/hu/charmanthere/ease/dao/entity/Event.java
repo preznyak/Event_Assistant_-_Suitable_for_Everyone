@@ -21,7 +21,7 @@ public class Event implements Serializable {
 
     private String eventName;
 
-    private String place;
+    private String locality;
 
     @OneToOne(fetch = FetchType.EAGER)
     private User user;
@@ -56,12 +56,12 @@ public class Event implements Serializable {
         this.eventName = eventName;
     }
 
-    public String getPlace() {
-        return place;
+    public String getLocality() {
+        return locality;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setLocality(String locality) {
+        this.locality = locality;
     }
 
     public User getUser() {

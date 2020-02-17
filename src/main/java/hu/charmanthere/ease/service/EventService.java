@@ -1,11 +1,13 @@
 package hu.charmanthere.ease.service;
 
 import hu.charmanthere.ease.dao.entity.Event;
+import hu.charmanthere.ease.dao.enumeration.EventCategory;
 import hu.charmanthere.ease.dao.implementation.EventDaoImpl;
 import hu.charmanthere.ease.exception.EventWithIdDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 @Service
 public class EventService {
@@ -34,5 +36,15 @@ public class EventService {
 
     public void deleteById(Long id) {
         eventDao.deleteById(id);
+    }
+
+    public List<Event> findEventsByEventCategory(EventCategory eventCategory){
+        return eventDao.findEventsByEventCategory(eventCategory);
+    }
+    public List<Event> findEventsByLocality(String locality){
+        return eventDao.findEventsByLocality(locality);
+    }
+    public List<Event> findEventsByDate(LocalDate localDate){
+        return eventDao.findEventsByDateTime(localDate.atStartOfDay());
     }
 }

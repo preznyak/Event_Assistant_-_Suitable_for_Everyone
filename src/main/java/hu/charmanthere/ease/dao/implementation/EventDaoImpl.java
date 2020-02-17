@@ -1,12 +1,15 @@
 package hu.charmanthere.ease.dao.implementation;
 
 import hu.charmanthere.ease.dao.entity.Event;
+import hu.charmanthere.ease.dao.enumeration.EventCategory;
 import hu.charmanthere.ease.dao.inteface.EventDaoInterface;
 import hu.charmanthere.ease.dao.repository.EventRepositoryInterface;
 import hu.charmanthere.ease.exception.EventWithIdDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -49,7 +52,22 @@ public class EventDaoImpl implements EventDaoInterface {
         eventToBeUpdated.setEventCategory(event.getEventCategory());
         eventToBeUpdated.setEventDetails(event.getEventDetails());
         eventToBeUpdated.setEventName(event.getEventName());
-        eventToBeUpdated.setPlace(event.getPlace());
+        eventToBeUpdated.setLocality(event.getLocality());
         eventRepositoryInterface.save(eventToBeUpdated);
+    }
+
+    @Override
+    public List<Event> findEventsByEventCategory(EventCategory eventCategory) {
+        return eventRepositoryInterface.findEventsByEventCategory(eventCategory);
+    }
+
+    @Override
+    public List<Event> findEventsByLocality(String locality) {
+        return eventRepositoryInterface.findEventsByLocality(locality);
+    }
+
+    @Override
+    public List<Event> findEventsByDateTime(LocalDateTime localDateTime) {
+        return eventRepositoryInterface.findEventsByEventDetails_StartTime(localDateTime);
     }
 }
