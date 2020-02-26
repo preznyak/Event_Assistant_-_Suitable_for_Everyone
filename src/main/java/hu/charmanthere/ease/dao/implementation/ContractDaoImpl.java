@@ -38,8 +38,8 @@ public class ContractDaoImpl implements ContractDaoInterface {
     public void update(Long id, Contract contract) throws ContractWithIdDoesNotExistException {
         Contract contractToBeUpdated = contractRepositoryInterface.findById(id).orElse(null);
         if(contractToBeUpdated == null){
-            System.out.println("Contact with "+ id + " does not exist!");
-            throw new ContractWithIdDoesNotExistException("Contact with "+ id + " does not exist!");
+            System.out.println("Contract with "+ id + " does not exist!");
+            throw new ContractWithIdDoesNotExistException("Contract with "+ id + " does not exist!");
         }
         contractToBeUpdated.setDeposit(contract.getDeposit());
         contractToBeUpdated.setDepositPayed(contract.getDepositPayed());
@@ -49,7 +49,6 @@ public class ContractDaoImpl implements ContractDaoInterface {
         contractToBeUpdated.setPrice(contract.getPrice());
         contractToBeUpdated.setPricePayed(contract.getPricePayed());
         contractToBeUpdated.setPricePaymentTime(contract.getPricePaymentTime());
-        contractRepositoryInterface.save(contractToBeUpdated);
         contractRepositoryInterface.save(contractToBeUpdated);
     }
 

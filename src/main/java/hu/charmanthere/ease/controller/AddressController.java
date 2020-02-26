@@ -51,7 +51,7 @@ public class AddressController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/delete/{addressId}")
-    public ResponseEntity<?> deleteAddressByUserId(@PathVariable Long addressId) {
+    public ResponseEntity<?> deleteAddressById(@PathVariable Long addressId) {
         addressService.deleteById(addressId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
