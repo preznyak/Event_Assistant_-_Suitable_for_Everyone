@@ -18,12 +18,6 @@ public class Contract implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_seq")
     private Long contractId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Service service;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    private Event event;
-
     private Integer price;
 
     private Integer deposit;
@@ -53,22 +47,6 @@ public class Contract implements Serializable {
 
     public void setContractId(Long contractId) {
         this.contractId = contractId;
-    }
-
-    public Service getService() {
-        return service;
-    }
-
-    public void setService(Service service) {
-        this.service = service;
-    }
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
     }
 
     public Integer getPrice() {
@@ -152,7 +130,6 @@ public class Contract implements Serializable {
     public String toString() {
         return "Contract{" +
                 "contractId=" + contractId +
-                ", service=" + service +
                 '}';
     }
 }
