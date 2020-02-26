@@ -1,5 +1,7 @@
 package hu.charmanthere.ease.service;
 
+import hu.charmanthere.ease.dao.entity.AdditionalCost;
+import hu.charmanthere.ease.dao.entity.Contract;
 import hu.charmanthere.ease.dao.entity.Event;
 import hu.charmanthere.ease.dao.enumeration.EventCategory;
 import hu.charmanthere.ease.dao.implementation.EventDaoImpl;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EventService {
     public EventDaoImpl eventDao;
@@ -46,5 +50,20 @@ public class EventService {
     }
     public List<Event> findEventsByDate(LocalDate localDate){
         return eventDao.findEventsByDateTime(localDate.atStartOfDay());
+    }
+
+    public Double getEventBudgetByEventId(Long id) throws EventWithIdDoesNotExistException {
+        Event searchedEvent = eventDao.findById(id);
+        List<Contract> contracts = searchedEvent.getContractList();
+        Integer sumContractPrices = 0;
+        if(contracts != null){
+            sumContractPrices = contracts.stream().map(c -> c.getPrice()).mapToInt(Integer::intValue).sum();
+        }
+        List<AdditionalCost> additionalCosts = searchedEvent.getAdditionalCostList();
+        Double sumAdditionalCosts = 0.0;
+        if(additionalCosts != null){
+            sumAdditionalCosts = additionalCosts.stream().map(a-> a.getPrice()).mapToDouble(Double::doubleValue).sum();
+        }
+        return sumContractPrices + sumAdditionalCosts;
     }
 }

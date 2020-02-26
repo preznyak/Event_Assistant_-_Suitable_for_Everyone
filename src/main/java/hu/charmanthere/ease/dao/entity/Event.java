@@ -32,6 +32,9 @@ public class Event implements Serializable {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private EventDetails eventDetails;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AdditionalCost> additionalCostList;
+
     private LocalDateTime created;
 
     @Enumerated(EnumType.STRING)
@@ -102,6 +105,14 @@ public class Event implements Serializable {
 
     public void setEventCategory(EventCategory eventCategory) {
         this.eventCategory = eventCategory;
+    }
+
+    public List<AdditionalCost> getAdditionalCostList() {
+        return additionalCostList;
+    }
+
+    public void setAdditionalCostList(List<AdditionalCost> additionalCostList) {
+        this.additionalCostList = additionalCostList;
     }
 
     @Override

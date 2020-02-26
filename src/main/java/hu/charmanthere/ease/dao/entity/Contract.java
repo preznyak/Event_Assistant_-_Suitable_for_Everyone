@@ -18,10 +18,10 @@ public class Contract implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contract_seq")
     private Long contractId;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     private Service service;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     private Event event;
 
     private Integer price;

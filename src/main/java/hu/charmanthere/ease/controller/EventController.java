@@ -75,4 +75,13 @@ public class EventController {
                                                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localDate) {
         return new ResponseEntity<>(eventService.findEventsByDate(localDate), HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/getbudget/{id}")
+    public ResponseEntity<?> findEventsByEventCategory(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(eventService.getEventBudgetByEventId(id), HttpStatus.OK);
+        } catch (EventWithIdDoesNotExistException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

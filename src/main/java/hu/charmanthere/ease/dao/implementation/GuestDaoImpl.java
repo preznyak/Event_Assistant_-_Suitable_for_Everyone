@@ -33,7 +33,7 @@ public class GuestDaoImpl implements GuestDaoInterface {
         guestToBeUpdated.setContact(guest.getContact());
         guestToBeUpdated.setFirstName(guest.getFirstName());
         guestToBeUpdated.setLastName(guest.getFirstName());
-        guestToBeUpdated.setInvitationAccepted(guestToBeUpdated.getInvitationAccepted());
+        guestToBeUpdated.setInvitationAccepted(guest.getInvitationAccepted());
         guestRepositoryInterface.save(guestToBeUpdated);
     }
 

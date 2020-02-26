@@ -53,6 +53,7 @@ public class EventDaoImpl implements EventDaoInterface {
         eventToBeUpdated.setEventDetails(event.getEventDetails());
         eventToBeUpdated.setEventName(event.getEventName());
         eventToBeUpdated.setLocality(event.getLocality());
+        eventToBeUpdated.setAdditionalCostList(event.getAdditionalCostList());
         eventRepositoryInterface.save(eventToBeUpdated);
     }
 
