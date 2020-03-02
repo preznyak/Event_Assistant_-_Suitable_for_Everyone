@@ -58,4 +58,22 @@ public class ServiceController {
         return new ResponseEntity<>(serviceService.findServicesByLocality(locality), HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/{id}")
+    public ResponseEntity<?> findServiceById(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(serviceService.findById(id), HttpStatus.OK);
+        } catch (ServiceWithIdDoesNotExistException e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/rate/{id}")
+    public ResponseEntity<?> rateServiceById(@PathVariable Long id, @RequestBody int rating){
+        try {
+            serviceService.rateServiceById(id, rating);
+        } catch (ServiceWithIdDoesNotExistException e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

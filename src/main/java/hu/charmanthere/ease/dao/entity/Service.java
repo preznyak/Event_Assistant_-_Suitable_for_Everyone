@@ -28,6 +28,9 @@ public class Service implements Serializable {
     @OneToOne(fetch = FetchType.EAGER)
     private User user;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade =  CascadeType.ALL)
+    private ServiceDetails serviceDetails;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Contact> contacts;
 
@@ -102,6 +105,14 @@ public class Service implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public ServiceDetails getServiceDetails() {
+        return serviceDetails;
+    }
+
+    public void setServiceDetails(ServiceDetails serviceDetails) {
+        this.serviceDetails = serviceDetails;
     }
 
     @Override

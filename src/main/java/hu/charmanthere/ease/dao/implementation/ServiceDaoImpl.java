@@ -1,5 +1,6 @@
 package hu.charmanthere.ease.dao.implementation;
 
+import hu.charmanthere.ease.dao.entity.ServiceDetails;
 import hu.charmanthere.ease.dao.enumeration.ServiceCategory;
 import hu.charmanthere.ease.dao.inteface.ServiceDaoInterface;
 import hu.charmanthere.ease.dao.repository.ServiceRepositoryInterface;
@@ -43,6 +44,7 @@ public class ServiceDaoImpl implements ServiceDaoInterface {
         serviceToBeUpdated.setHomePage(service.getHomePage());
         serviceToBeUpdated.setName(service.getName());
         serviceToBeUpdated.setServiceCategory(service.getServiceCategory());
+        serviceToBeUpdated.setServiceDetails(service.getServiceDetails());
         serviceRepositoryInterface.save(serviceToBeUpdated);
     }
 
@@ -54,5 +56,32 @@ public class ServiceDaoImpl implements ServiceDaoInterface {
     @Override
     public List<hu.charmanthere.ease.dao.entity.Service> findServicesByLocality(String locality) {
         return serviceRepositoryInterface.findServiceByAddresses_City(locality);
+    }
+
+    @Override
+    public hu.charmanthere.ease.dao.entity.Service findById(Long id) throws ServiceWithIdDoesNotExistException {
+        hu.charmanthere.ease.dao.entity.Service service = serviceRepositoryInterface.findById(id).orElse(null);
+        if(service == null){
+            System.out.println("Service with id: " + id + " does not exist.");
+            throw new ServiceWithIdDoesNotExistException("Service with id: " + id + " does not exist.");
+        }
+        return service;
+
+    }
+
+    @Override
+    public void rateServiceById(Long id, int rating) throws ServiceWithIdDoesNotExistException {
+        hu.charmanthere.ease.dao.entity.Service service = serviceRepositoryInterface.findById(id).orElse(null);
+        if(service == null){
+            System.out.println("Service with id: " + id + " does not exist.");
+            throw new ServiceWithIdDoesNotExistException("Service with id: " + id + " does not exist.");
+        }
+        ServiceDetails serviceDetails = service.getServiceDetails();
+        Double presentRatingSum = serviceDetails.getRating()*serviceDetails.getRatingNumber();
+        Double newRating = (presentRatingSum + rating)/(serviceDetails.getRatingNumber()+1);
+        serviceDetails.setRating(newRating);
+        serviceDetails.setRatingNumber(serviceDetails.getRatingNumber()+1);
+        service.setServiceDetails(serviceDetails);
+        serviceRepositoryInterface.save(service);
     }
 }

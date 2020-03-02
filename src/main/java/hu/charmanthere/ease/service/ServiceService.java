@@ -40,4 +40,12 @@ public class ServiceService {
     public List<Service> findServicesByLocality(String locality){
         return serviceDao.findServicesByLocality(locality);
     }
+
+    public Service findById(Long id) throws ServiceWithIdDoesNotExistException {
+        return serviceDao.findById(id);
+    }
+
+    public void rateServiceById(Long id, int rating) throws ServiceWithIdDoesNotExistException {
+        serviceDao.rateServiceById(id, rating);
+    }
 }
