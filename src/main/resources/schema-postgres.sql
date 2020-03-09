@@ -152,9 +152,14 @@ CREATE TABLE services (
     name character varying(255),
     service_category character varying(255),
     user_user_id bigint,
+    service_details_id bigint,
     CONSTRAINT services_pkey PRIMARY KEY (service_id),
     CONSTRAINT fk_s_user_id FOREIGN KEY (user_user_id)
         REFERENCES users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_s_service_details_id FOREIGN KEY (service_details_id)
+        REFERENCES service_details(id)  MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );

@@ -48,11 +48,11 @@ VALUES (1, '2020-01-04', 'Egy malac a leveshez', 'Malac', 350);
 INSERT INTO public.additional_costs(additional_cost_id, date, description, name, price)
 VALUES (2, '2020-01-04', 'Egy malac a leveshez', 'Malac', 350);
 INSERT INTO public.additional_costs(additional_cost_id, date, description, name, price)
-VALUES (2, '2020-01-04', 'Egy malac a leveshez', 'Malac', 350);
+VALUES (3, '2020-01-04', 'Egy malac a leveshez', 'Malac', 350);
 INSERT INTO public.additional_costs(additional_cost_id, date, description, name, price)
-VALUES (2, '2020-01-04', 'Egy malac a leveshez', 'Malac', 350);
+VALUES (4, '2020-01-04', 'Egy malac a leveshez', 'Malac', 350);
 INSERT INTO public.additional_costs(additional_cost_id, date, description, name, price)
-VALUES (2, '2020-01-04', 'Egy malac a leveshez', 'Malac', 350);
+VALUES (5, '2020-01-04', 'Egy malac a leveshez', 'Malac', 350);
 
 INSERT INTO public.addresses(address_id, city, country, house_number, state, street_name, zip_code)
 VALUES (1, 'Debrecen', 'Hungary', '56', 'Hajdu-Bihar', 'Derek', '4031');
@@ -74,6 +74,157 @@ VALUES (1, 'Egyszer a farkas elment a MediaMarktba. Nem lett jo vege.', '2020-02
 INSERT INTO public.articles(id, content, creation_time, title, youtube_link, user_user_id)
 VALUES (2, 'Hatalmas lakodalom volt Ujpesten, ahol a Vegas zenekar huzta a talpalavalot',
         '2020-01-16', 'Vegas Ujpesten', 'link.com', 2);
-INSERT INTO public.articles(id, content, creation_time, title, youtube_link, user_user_id)
-VALUES (3, ?, ?, ?, ?, ?);
 
+INSERT INTO public.event_details(
+    event_details_id, description, end_time, start_time)
+VALUES (1, 'Sanyi es Zoli eskuvoje', '2020-01-26 09:15:00', '2020-01-28 10:00:00');
+INSERT INTO public.event_details(
+    event_details_id, description, end_time, start_time)
+VALUES (2, 'Rozika keresztelője. Nagyjából 100 vendég, finom ételek, tánc.', '2020-05-12 09:00:00', '2020-05-13 06:00:00');
+INSERT INTO public.event_details(
+    event_details_id, description, end_time, start_time)
+VALUES (3, 'Születésnap Dzsínókának', '2020-06-10 11:00:00', '2020-06-11 06:00:00');
+INSERT INTO public.event_details(
+    event_details_id, description, end_time, start_time)
+VALUES (4, 'Tejfakasztó buli Andrisnak.', '2020-02-10 09:15:00', '2020-02-11 10:00:00');
+INSERT INTO public.event_details(
+    event_details_id, description, end_time, start_time)
+VALUES (5, 'Konfirmálás Kiskerekiben 10 főre.', '2020-05-04 10:00:00', '2020-05-04 12:00:00'
+);
+
+INSERT INTO public.guests(
+    guest_id, first_name, is_invitation_accepted, last_name, contact_contact_id)
+VALUES (1, 'Laszlo', false, 'Preznyak', 1);
+INSERT INTO public.guests(
+    guest_id, first_name, is_invitation_accepted, last_name, contact_contact_id)
+VALUES (2, 'Van', false, 'Damme', 4);
+INSERT INTO public.guests(
+    guest_id, first_name, is_invitation_accepted, last_name, contact_contact_id)
+VALUES (3, 'Antoine', true, 'Griezmann', 7);
+INSERT INTO public.guests(
+    guest_id, first_name, is_invitation_accepted, last_name, contact_contact_id)
+VALUES (4, 'Shrek', false, 'Shrek', 5);
+INSERT INTO public.guests(
+    guest_id, first_name, is_invitation_accepted, last_name, contact_contact_id)
+VALUES (5, 'William', true, 'Smith', 3);
+INSERT INTO public.guests(
+    guest_id, first_name, is_invitation_accepted, last_name, contact_contact_id)
+VALUES (6, 'Laszlo', true, 'Preznyak', 1);
+
+
+INSERT INTO public.event_details_guest_list(
+    event_details_event_details_id, guest_list_guest_id)
+VALUES (1, 5);
+INSERT INTO public.event_details_guest_list(
+    event_details_event_details_id, guest_list_guest_id)
+VALUES (5, 6);
+INSERT INTO public.event_details_guest_list(
+    event_details_event_details_id, guest_list_guest_id)
+VALUES (4, 4);
+INSERT INTO public.event_details_guest_list(
+    event_details_event_details_id, guest_list_guest_id)
+VALUES (3, 2);
+INSERT INTO public.event_details_guest_list(
+    event_details_event_details_id, guest_list_guest_id)
+VALUES (2, 3);
+
+
+INSERT INTO public.events(
+    event_id, created, event_category, event_name, locality, event_details_event_details_id, user_user_id)
+VALUES (1, current_timestamp, 'WEDDING', 'Homo lagzi', 'Zalaegerszeg', 1, 7);
+INSERT INTO public.events(
+    event_id, created, event_category, event_name, locality,  user_user_id)
+VALUES (2, current_timestamp, 'WEDDING', 'Zsolt és Tímea esküvője', 'Érkeserű', 1);
+INSERT INTO public.events(
+    event_id, created, event_category, event_name, locality, event_details_event_details_id, user_user_id)
+VALUES (3, current_timestamp, 'CHRISTENING', 'Rozika keresztelője', 'Debrecen', 2, 4);
+INSERT INTO public.events(
+    event_id, created, event_category, event_name, locality, event_details_event_details_id, user_user_id)
+VALUES (4, current_timestamp, 'BIRTHDAY', 'Dzsínóka születésnap', 'Komárom', 3, 6);
+INSERT INTO public.events(
+    event_id, created, event_category, event_name, locality, user_user_id)
+VALUES (5, current_timestamp, 'BIRTHDAY', 'Arnold 90. születésnapja', 'New York', 2);
+
+INSERT INTO public.events_additional_cost_list(
+    event_event_id, additional_cost_list_additional_cost_id)
+VALUES (1, 4);
+INSERT INTO public.events_additional_cost_list(
+    event_event_id, additional_cost_list_additional_cost_id)
+VALUES (2, 3);
+INSERT INTO public.events_additional_cost_list(
+    event_event_id, additional_cost_list_additional_cost_id)
+VALUES (3, 2);
+INSERT INTO public.events_additional_cost_list(
+    event_event_id, additional_cost_list_additional_cost_id)
+VALUES (4, 1);
+
+INSERT INTO public.user_details_address_list(
+    user_details_user_details_id, address_list_address_id)
+VALUES (1, 1);
+INSERT INTO public.user_details_address_list(
+    user_details_user_details_id, address_list_address_id)
+VALUES (2, 3);
+INSERT INTO public.user_details_address_list(
+    user_details_user_details_id, address_list_address_id)
+VALUES (3, 4);
+
+INSERT INTO public.service_details(
+    id, rating, rating_number)
+VALUES (1, 0, 0);
+INSERT INTO public.service_details(
+    id, rating, rating_number)
+VALUES (2, 4, 2);
+INSERT INTO public.service_details(
+    id, rating, rating_number)
+VALUES (3, 10, 5);
+
+INSERT INTO public.comments(
+    comment_id, commenter, date, message)
+VALUES (1, 'Zolika', current_timestamp, 'Tökéletes zenekar, 10/10');
+INSERT INTO public.comments(
+    comment_id, commenter, date, message)
+VALUES (2, 'Bütyök', current_timestamp, 'Nagyszerű ételek, kedves kiszolgálás. CSak ajánlani tudom.');
+INSERT INTO public.comments(
+    comment_id, commenter, date, message)
+VALUES (3, 'Justin Timberlake', current_timestamp, 'He is the best CM Ive ever met');
+
+INSERT INTO public.service_details_comment_list(
+    service_details_id, comment_list_comment_id)
+VALUES (1, 1);
+INSERT INTO public.service_details_comment_list(
+    service_details_id, comment_list_comment_id)
+VALUES (2, 2);
+INSERT INTO public.service_details_comment_list(
+    service_details_id, comment_list_comment_id)
+VALUES (3, 3);
+
+INSERT INTO public.services(
+    service_id, description, home_page, name, service_category, user_user_id, service_details_id)
+VALUES (1, 'Lakodalmi zenekar, élő zene, minőség.', 'Home Page', 'Vegas Band', 'BAND', 2, 1);
+INSERT INTO public.services(
+    service_id, description, home_page, name, service_category, user_user_id, service_details_id)
+VALUES (2, 'Kulturált étterem igényes vendégeknek.', 'Home Page', 'Csokonai Étterem', 'RESTAURANT', 7, 2);
+INSERT INTO public.services(
+    service_id, description, home_page, name, service_category, user_user_id, service_details_id)
+VALUES (3, 'Lakodalmi vőfély-hagyományos-modern-megbízható.', 'Home Page', 'Preznyák László Vőfély', 'CEREMONYMASTER', 1, 3);
+
+INSERT INTO public.services_contacts(
+    service_service_id, contacts_contact_id)
+VALUES (1, 2);
+INSERT INTO public.services_contacts(
+    service_service_id, contacts_contact_id)
+VALUES (1, 5);
+INSERT INTO public.services_contacts(
+    service_service_id, contacts_contact_id)
+VALUES (2, 7);
+INSERT INTO public.services_contacts(
+    service_service_id, contacts_contact_id)
+VALUES (3, 1);
+
+
+INSERT INTO public.services_addresses(
+    service_service_id, addresses_address_id)
+VALUES (3, 1);
+INSERT INTO public.services_addresses(
+    service_service_id, addresses_address_id)
+VALUES (1, 2);
