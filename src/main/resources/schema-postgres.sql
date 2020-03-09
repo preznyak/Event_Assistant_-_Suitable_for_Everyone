@@ -50,20 +50,6 @@ CREATE TABLE contacts (
     CONSTRAINT contacts_pkey PRIMARY KEY (contact_id)
 );
 
-DROP TABLE IF EXISTS contracts CASCADE;
-CREATE TABLE contracts (
-    contract_id bigint NOT NULL,
-    deposit integer,
-    deposit_payment_time timestamp without time zone,
-    description character varying(255),
-    is_deposit_payed boolean,
-    is_price_payed boolean,
-    payment_method character varying(255),
-    price integer,
-    price_payment_time timestamp without time zone,
-    CONSTRAINT contracts_pkey PRIMARY KEY (contract_id)
-);
-
 DROP TABLE IF EXISTS event_details CASCADE;
 CREATE TABLE event_details (
     event_details_id bigint NOT NULL,
@@ -135,6 +121,7 @@ CREATE TABLE users (
     last_login_date date,
     password character varying(255),
     user_details_user_details_id bigint,
+    service_owner boolean DEFAULT false,
     CONSTRAINT users_pkey PRIMARY KEY (user_id),
     CONSTRAINT uk_email UNIQUE (email),
     CONSTRAINT fk_u_user_details_id FOREIGN KEY (user_details_user_details_id)
@@ -160,6 +147,27 @@ CREATE TABLE services (
         ON DELETE NO ACTION,
     CONSTRAINT fk_s_service_details_id FOREIGN KEY (service_details_id)
         REFERENCES service_details(id)  MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+DROP TABLE IF EXISTS contracts CASCADE;
+CREATE TABLE contracts (
+    contract_id bigint NOT NULL,
+    deposit integer,
+    deposit_payment_time timestamp without time zone,
+    description character varying(255),
+    is_deposit_payed boolean,
+    is_price_payed boolean,
+    payment_method character varying(255),
+    price integer,
+    price_payment_time timestamp without time zone,
+    event_start_time timestamp without time zone,
+    event_end_time timestamp without time zone,
+    service_service_id bigint,
+    CONSTRAINT contracts_pkey PRIMARY KEY (contract_id),
+    CONSTRAINT fk_c_service_service_id FOREIGN KEY (service_service_id)
+        REFERENCES services(service_id)  MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
