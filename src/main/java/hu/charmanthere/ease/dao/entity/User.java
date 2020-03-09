@@ -25,6 +25,8 @@ public class User implements Serializable {
 
     private LocalDate lastLoginDate;
 
+    private boolean serviceOwner;
+
     @OneToOne(fetch = FetchType.EAGER, cascade =  CascadeType.ALL)
     private UserDetails userDetails;
 
@@ -69,6 +71,14 @@ public class User implements Serializable {
 
     public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;
+    }
+
+    public boolean isServiceOwner() {
+        return serviceOwner;
+    }
+
+    public void setServiceOwner(boolean serviceOwner) {
+        this.serviceOwner = serviceOwner;
     }
 
     @Override

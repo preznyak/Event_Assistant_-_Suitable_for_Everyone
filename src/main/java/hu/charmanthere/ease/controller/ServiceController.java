@@ -1,14 +1,19 @@
 package hu.charmanthere.ease.controller;
 
+import hu.charmanthere.ease.dao.entity.Contract;
 import hu.charmanthere.ease.dao.entity.Service;
 import hu.charmanthere.ease.dao.enumeration.ServiceCategory;
 import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.ServiceService;
+import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/service")
@@ -75,5 +80,12 @@ public class ServiceController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/calendar/{id}")
+    public ResponseEntity<?> getCalendarByServiceId(@PathVariable Long id){
+        List<Contract> contracts = serviceService.getContractsByServiceId(id);
+        return new ResponseEntity<>(contracts, HttpStatus.OK);
+
     }
 }
