@@ -1,0 +1,22 @@
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Event Name</th>
+        <th scope="col">Creators Email</th>
+        <th scope="col">Created</th>
+        <th scope="col">Locality</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let event of events">
+        <td>{{ event.eventName }}</td>
+        <td>{{  event.user.email }}</td>
+        <td>{{  event.created }}</td>
+        <td>{{  event.locality }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

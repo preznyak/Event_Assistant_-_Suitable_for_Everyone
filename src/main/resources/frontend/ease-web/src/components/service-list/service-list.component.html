@@ -1,0 +1,22 @@
+<div class="card my-5">
+  <div class="card-body">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Service Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Home Page</th>
+        <th scope="col">Service Provider Email</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let service of services">
+        <td>{{ service.name }}</td>
+        <td>{{ service.description }}</td>
+        <td>{{ service.homePage }}</td>
+        <td>{{ service.user.email }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

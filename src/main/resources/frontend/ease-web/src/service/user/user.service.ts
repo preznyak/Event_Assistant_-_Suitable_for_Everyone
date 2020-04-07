@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {User} from "../../model/user/user";
 
 @Injectable()
-export class UserServiceService {
+export class UserService {
 
   private usersUrl: string;
 
