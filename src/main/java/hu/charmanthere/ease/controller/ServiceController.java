@@ -5,14 +5,12 @@ import hu.charmanthere.ease.dao.entity.Service;
 import hu.charmanthere.ease.dao.enumeration.ServiceCategory;
 import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.ServiceService;
-import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController

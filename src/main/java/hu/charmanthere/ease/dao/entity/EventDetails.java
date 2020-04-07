@@ -1,7 +1,5 @@
 package hu.charmanthere.ease.dao.entity;
 
-import hu.charmanthere.ease.dao.enumeration.EventCategory;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;

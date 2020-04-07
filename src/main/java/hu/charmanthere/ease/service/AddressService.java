@@ -2,7 +2,6 @@ package hu.charmanthere.ease.service;
 
 import hu.charmanthere.ease.dao.entity.Address;
 import hu.charmanthere.ease.dao.implementation.AddressDaoImpl;
-import hu.charmanthere.ease.dao.inteface.AddressDaoInterface;
 import hu.charmanthere.ease.exception.AddressWithIdDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

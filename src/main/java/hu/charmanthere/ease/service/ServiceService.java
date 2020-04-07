@@ -7,7 +7,6 @@ import hu.charmanthere.ease.dao.implementation.ServiceDaoImpl;
 import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Service

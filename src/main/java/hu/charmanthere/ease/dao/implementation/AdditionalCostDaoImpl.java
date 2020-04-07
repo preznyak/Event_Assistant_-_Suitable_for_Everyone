@@ -1,11 +1,9 @@
 package hu.charmanthere.ease.dao.implementation;
 
 import hu.charmanthere.ease.dao.entity.AdditionalCost;
-import hu.charmanthere.ease.dao.entity.Address;
 import hu.charmanthere.ease.dao.inteface.AdditionalCostDaoInterface;
 import hu.charmanthere.ease.dao.repository.AdditionalCostRepositoryInterface;
 import hu.charmanthere.ease.exception.AdditionalCostWithIdDoesNotExistException;
-import hu.charmanthere.ease.exception.AddressWithIdDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

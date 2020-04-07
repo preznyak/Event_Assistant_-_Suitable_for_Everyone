@@ -2,7 +2,6 @@ package hu.charmanthere.ease.service.util;
 
 import hu.charmanthere.ease.dao.entity.AdditionalCost;
 import hu.charmanthere.ease.dao.entity.Contract;
-import hu.charmanthere.ease.dao.entity.Event;
 
 import java.util.List;
 

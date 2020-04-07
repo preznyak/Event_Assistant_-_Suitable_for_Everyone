@@ -1,10 +1,12 @@
 package hu.charmanthere.ease.service;
 
+import hu.charmanthere.ease.controller.model.UserModel;
 import hu.charmanthere.ease.dao.entity.User;
 import hu.charmanthere.ease.dao.implementation.UserDaoImpl;
 import hu.charmanthere.ease.exception.UserValidationException;
 import hu.charmanthere.ease.exception.UserWithEmailDoesNotExistException;
 import hu.charmanthere.ease.exception.UserWithIdDoesNotExistException;
+import hu.charmanthere.ease.service.converter.UserModelConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,11 @@ public class UserService {
     private final static Logger LOGGER = Logger.getLogger(UserService.class.getName());
 
     private UserDaoImpl userDao;
+    private UserModelConverter userModelConverter;
 
     @Autowired
-    public UserService(UserDaoImpl userDao) {
+    public UserService(UserDaoImpl userDao, UserModelConverter userModelConverter) {
+        this.userModelConverter = userModelConverter;
         this.userDao = userDao;
     }
 
@@ -53,6 +57,17 @@ public class UserService {
         }
     }
 
+    private void validateUserModel(UserModel userModel) throws UserValidationException {
+        if(StringUtils.isBlank(userModel.getEmail())){
+            LOGGER.info("Email was null or empty.");
+            throw new UserValidationException("Email must not be empty.");
+        }
+        if(StringUtils.isBlank(userModel.getPassword())){
+            LOGGER.info("Password was null or empty.");
+            throw new UserValidationException("Password must not be empty.");
+        }
+    }
+
     public List<User> findAll() {
         return userDao.findAll();
     }
@@ -67,5 +82,10 @@ public class UserService {
 
     public User findById(Long id) throws UserWithIdDoesNotExistException {
         return userDao.findById(id);
+    }
+
+    public void createByModel(UserModel userModel) throws UserValidationException {
+        User user = userModelConverter.from(userModel);
+        userDao.save(user);
     }
 }

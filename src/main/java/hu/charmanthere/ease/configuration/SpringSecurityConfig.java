@@ -7,8 +7,6 @@ package hu.charmanthere.ease.configuration;
 //import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 //import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import javax.sql.DataSource;
-
 //@Configuration
 public class SpringSecurityConfig{
 //    extends

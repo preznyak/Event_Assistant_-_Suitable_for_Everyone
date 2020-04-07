@@ -5,7 +5,6 @@ import hu.charmanthere.ease.dao.entity.Service;
 import hu.charmanthere.ease.dao.enumeration.ServiceCategory;
 import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
 
-import java.util.Date;
 import java.util.List;
 
 public interface ServiceDaoInterface {

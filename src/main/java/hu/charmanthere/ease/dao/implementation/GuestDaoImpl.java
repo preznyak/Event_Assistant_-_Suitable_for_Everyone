@@ -1,7 +1,6 @@
 package hu.charmanthere.ease.dao.implementation;
 
 import hu.charmanthere.ease.dao.entity.Guest;
-import hu.charmanthere.ease.dao.inteface.EventDaoInterface;
 import hu.charmanthere.ease.dao.inteface.GuestDaoInterface;
 import hu.charmanthere.ease.dao.repository.GuestRepositoryInterface;
 import hu.charmanthere.ease.exception.GuestWithIdDoesNotExistException;

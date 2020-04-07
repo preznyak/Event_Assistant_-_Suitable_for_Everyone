@@ -1,5 +1,6 @@
 package hu.charmanthere.ease.controller;
 
+import hu.charmanthere.ease.controller.model.UserModel;
 import hu.charmanthere.ease.dao.entity.User;
 import hu.charmanthere.ease.exception.UserValidationException;
 import hu.charmanthere.ease.exception.UserWithEmailDoesNotExistException;
@@ -73,6 +74,16 @@ public class UserController {
         }
     }
 
-    //TODO Service, Offer, Event, Contract, Contact, Guest, Address Controller
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/model/create")
+    public ResponseEntity<?> createUserByUserModel(@RequestBody UserModel userModel) {
+        try {
+            userService.createByModel(userModel);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (UserValidationException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }
