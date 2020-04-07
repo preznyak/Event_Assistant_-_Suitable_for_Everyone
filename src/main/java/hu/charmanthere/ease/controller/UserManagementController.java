@@ -1,5 +1,7 @@
 package hu.charmanthere.ease.controller;
 
+import hu.charmanthere.ease.controller.model.user.RegisterUserModel;
+import hu.charmanthere.ease.controller.model.user.UserModel;
 import hu.charmanthere.ease.dao.entity.User;
 import hu.charmanthere.ease.exception.UserValidationException;
 import hu.charmanthere.ease.service.UserService;
@@ -37,5 +39,16 @@ public class UserManagementController {
     public ResponseEntity<?> deleteUser(@RequestBody User user) {
         userService.deleteById(user.getUserId());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/register/user")
+    public ResponseEntity<?> createUser(@RequestBody UserModel userModel){
+        try {
+            userService.registerUser(userModel);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (UserValidationException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

@@ -1,6 +1,6 @@
 package hu.charmanthere.ease.controller;
 
-import hu.charmanthere.ease.controller.model.UserModel;
+import hu.charmanthere.ease.controller.model.user.UserModel;
 import hu.charmanthere.ease.dao.entity.User;
 import hu.charmanthere.ease.exception.UserValidationException;
 import hu.charmanthere.ease.exception.UserWithEmailDoesNotExistException;
@@ -43,7 +43,12 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
     public ResponseEntity<?> findAllUser() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAllModel(), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all/list")
+    public ResponseEntity<?> findAllUserListModel() {
+        return new ResponseEntity<>(userService.findAllUserListModel(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE, value = "/update/{id}")
@@ -73,17 +78,5 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.OK);
         }
     }
-
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/model/create")
-    public ResponseEntity<?> createUserByUserModel(@RequestBody UserModel userModel) {
-        try {
-            userService.createByModel(userModel);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (UserValidationException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
 
 }
