@@ -1,5 +1,6 @@
-package hu.charmanthere.ease.controller.model;
+package hu.charmanthere.ease.controller.model.user;
 
+import hu.charmanthere.ease.controller.model.userdetails.UserDetailsModel;
 import java.time.LocalDate;
 
 public class UserModel {
@@ -11,13 +12,7 @@ public class UserModel {
 
     private boolean serviceOwner;
 
-    public UserModel() {
-    }
-
-    public UserModel(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+    private UserDetailsModel userDetailsModel;
 
     public String getEmail() {
         return email;
@@ -49,5 +44,13 @@ public class UserModel {
 
     public void setServiceOwner(boolean serviceOwner) {
         this.serviceOwner = serviceOwner;
+    }
+
+    public UserDetailsModel getUserDetailsModel() {
+        return userDetailsModel;
+    }
+
+    public void setUserDetailsModel(UserDetailsModel userDetailsModel) {
+        this.userDetailsModel = userDetailsModel;
     }
 }

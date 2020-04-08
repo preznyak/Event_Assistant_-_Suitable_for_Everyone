@@ -1,6 +1,7 @@
 package hu.charmanthere.ease.service;
 
-import hu.charmanthere.ease.controller.model.UserModel;
+import hu.charmanthere.ease.controller.model.user.UserListModel;
+import hu.charmanthere.ease.controller.model.user.UserModel;
 import hu.charmanthere.ease.dao.entity.User;
 import hu.charmanthere.ease.dao.implementation.UserDaoImpl;
 import hu.charmanthere.ease.exception.UserValidationException;
@@ -12,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -66,10 +69,27 @@ public class UserService {
             LOGGER.info("Password was null or empty.");
             throw new UserValidationException("Password must not be empty.");
         }
+        if(userModel.getUserDetailsModel().getBirthDay()==null) {
+            LOGGER.warning("Birthday is null.");
+            throw new UserValidationException("Birthday is required.");
+        } else if (userModel.getUserDetailsModel().getBirthDay().isAfter(LocalDate.now().minus(18, ChronoUnit.YEARS))){
+            LOGGER.warning("User is under 18.");
+            throw new UserValidationException("You can not register, you are under age.");
+        }
     }
 
     public List<User> findAll() {
         return userDao.findAll();
+    }
+
+    public List<UserModel> findAllModel() {
+        List<User> users = userDao.findAll();
+        return users.stream().map(user -> userModelConverter.fromUserToUserModel(user)).collect(Collectors.toList());
+    }
+
+    public List<UserListModel> findAllUserListModel() {
+        List<User> users = userDao.findAll();
+        return users.stream().map(user -> userModelConverter.fromUserToUserListModel(user)).collect(Collectors.toList());
     }
 
     public void update(Long id, User user) throws UserWithIdDoesNotExistException {
@@ -84,8 +104,9 @@ public class UserService {
         return userDao.findById(id);
     }
 
-    public void createByModel(UserModel userModel) throws UserValidationException {
-        User user = userModelConverter.from(userModel);
+    public void registerUser(UserModel userModel) throws UserValidationException {
+        validateUserModel(userModel);
+        User user = userModelConverter.fromUserModel(userModel);
         userDao.save(user);
     }
 }

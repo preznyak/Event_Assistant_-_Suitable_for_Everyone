@@ -1,6 +1,8 @@
 package hu.charmanthere.ease.service.converter;
 
-import hu.charmanthere.ease.controller.model.UserModel;
+import hu.charmanthere.ease.controller.model.user.RegisterUserModel;
+import hu.charmanthere.ease.controller.model.user.UserListModel;
+import hu.charmanthere.ease.controller.model.user.UserModel;
 import hu.charmanthere.ease.dao.entity.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,20 @@ public class UserModelConverter {
         this.modelMapper = modelMapper;
     }
 
-    public User from(UserModel userModel){
+    public User fromUserModel(UserModel userModel){
         return modelMapper.map(userModel, User.class);
+    }
+
+    public User fromRegisterUserModel(RegisterUserModel registerUserModel) {
+        return modelMapper.map(registerUserModel, User.class);
+    }
+
+    public UserModel fromUserToUserModel(User user){
+        return modelMapper.map(user, UserModel.class);
+    }
+
+    public UserListModel fromUserToUserListModel(User user){
+        return modelMapper.map(user, UserListModel.class);
     }
 }
 
