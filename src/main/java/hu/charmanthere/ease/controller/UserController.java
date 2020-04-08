@@ -41,9 +41,14 @@ public class UserController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all/model")
     public ResponseEntity<?> findAllUser() {
         return new ResponseEntity<>(userService.findAllModel(), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all")
+    public ResponseEntity<?> findAll() {
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/all/list")

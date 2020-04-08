@@ -26,7 +26,7 @@ public class UserModelConverter {
         return modelMapper.map(registerUserModel, User.class);
     }
 
-    public UserModel fromUser(User user){
+    public UserModel fromUserToUserModel(User user){
         return modelMapper.map(user, UserModel.class);
     }
 

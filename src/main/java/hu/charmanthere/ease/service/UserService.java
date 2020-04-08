@@ -1,6 +1,5 @@
 package hu.charmanthere.ease.service;
 
-import hu.charmanthere.ease.controller.model.user.RegisterUserModel;
 import hu.charmanthere.ease.controller.model.user.UserListModel;
 import hu.charmanthere.ease.controller.model.user.UserModel;
 import hu.charmanthere.ease.dao.entity.User;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -71,21 +69,10 @@ public class UserService {
             LOGGER.info("Password was null or empty.");
             throw new UserValidationException("Password must not be empty.");
         }
-    }
-
-    private void validateUserModel(RegisterUserModel registerUserModel) throws UserValidationException {
-        if(StringUtils.isBlank(registerUserModel.getEmail())){
-            LOGGER.info("Email was null or empty.");
-            throw new UserValidationException("Email must not be empty.");
-        }
-        if(StringUtils.isBlank(registerUserModel.getPassword())){
-            LOGGER.info("Password was null or empty.");
-            throw new UserValidationException("Password must not be empty.");
-        }
-        if(registerUserModel.getUserDetailsModel().getBirthDay()==null) {
+        if(userModel.getUserDetailsModel().getBirthDay()==null) {
             LOGGER.warning("Birthday is null.");
             throw new UserValidationException("Birthday is required.");
-        } else if (registerUserModel.getUserDetailsModel().getBirthDay().isAfter(LocalDate.now().minus(18, ChronoUnit.YEARS))){
+        } else if (userModel.getUserDetailsModel().getBirthDay().isAfter(LocalDate.now().minus(18, ChronoUnit.YEARS))){
             LOGGER.warning("User is under 18.");
             throw new UserValidationException("You can not register, you are under age.");
         }
@@ -97,7 +84,7 @@ public class UserService {
 
     public List<UserModel> findAllModel() {
         List<User> users = userDao.findAll();
-        return users.stream().map(user -> userModelConverter.fromUser(user)).collect(Collectors.toList());
+        return users.stream().map(user -> userModelConverter.fromUserToUserModel(user)).collect(Collectors.toList());
     }
 
     public List<UserListModel> findAllUserListModel() {
