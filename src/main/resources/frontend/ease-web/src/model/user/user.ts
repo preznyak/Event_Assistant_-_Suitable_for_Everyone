@@ -1,6 +1,10 @@
+import {UserDetails} from "./user-details";
+
 export class User {
-    email: string;
-    password: string;
-    lastLoginDate: string;
-    serviceOwner: string;
+  userId: string;
+  email: string;
+  password: string;
+  lastLoginDate: string;
+  serviceOwner: string;
+  userDetails: UserDetails;
 }
