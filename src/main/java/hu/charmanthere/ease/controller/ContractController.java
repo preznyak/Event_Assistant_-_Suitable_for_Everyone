@@ -2,6 +2,8 @@ package hu.charmanthere.ease.controller;
 
 import hu.charmanthere.ease.dao.entity.Contract;
 import hu.charmanthere.ease.exception.ContractWithIdDoesNotExistException;
+import hu.charmanthere.ease.exception.EventWithIdDoesNotExistException;
+import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,5 +56,23 @@ public class ContractController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/event/{id}")
+    public ResponseEntity<?> findAllByEventId(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(contractService.findAllByEventId(id), HttpStatus.OK);
+        } catch (EventWithIdDoesNotExistException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/service/{id}")
+    public ResponseEntity<?> findAllByServiceId(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(contractService.findAllByServiceId(id), HttpStatus.OK);
+        } catch (ServiceWithIdDoesNotExistException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
