@@ -65,13 +65,13 @@ public class EventController {
         return new ResponseEntity<>(eventService.findEventsByEventCategory(category), HttpStatus.OK);
     }
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/locality/{locality}")
-    public ResponseEntity<?> findEventsByEventCategory(@PathVariable String locality) {
+    public ResponseEntity<?> findEventsByEventLocality(@PathVariable String locality) {
         return new ResponseEntity<>(eventService.findEventsByLocality(locality), HttpStatus.OK);
     }
 
     //TODO
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/date")
-    public ResponseEntity<?> findEventsByEventCategory(@RequestParam("localDate")
+    public ResponseEntity<?> findEventsByEventStartDate(@RequestParam("localDate")
                                                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localDate) {
         return new ResponseEntity<>(eventService.findEventsByDate(localDate), HttpStatus.OK);
     }

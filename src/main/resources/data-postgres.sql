@@ -230,11 +230,11 @@ INSERT INTO public.services_addresses(
 VALUES (1, 2);
 
 INSERT INTO public.contracts(
-    contract_id, deposit, deposit_payment_time, description, is_deposit_payed, is_price_payed, payment_method, price, price_payment_time, event_start_time, event_end_time, service_service_id)
-VALUES (1, 50, current_timestamp, 'description', false, false, 'CASH', 250, '2020-05-12 12:00:00', '2020-05-10 10:00:00', '2020-05-11 06:00:00', 3);
+    contract_id, deposit, deposit_payment_time, description, is_deposit_payed, is_price_payed, payment_method, price, price_payment_time,service_service_id,event_event_id)
+VALUES (1, 50, current_timestamp, 'description', false, false, 'CASH', 250, '2020-05-12 12:00:00', 3,1);
 INSERT INTO public.contracts(
-    contract_id, deposit, deposit_payment_time, description, is_deposit_payed, is_price_payed, payment_method, price, price_payment_time, event_start_time, event_end_time, service_service_id)
-VALUES (2, 1000, current_timestamp, 'description', true, false, 'CASH', 3000, '2020-05-12 12:00:00', '2020-05-10 10:00:00', '2020-05-11 06:00:00', 2);
+    contract_id, deposit, deposit_payment_time, description, is_deposit_payed, is_price_payed, payment_method, price, price_payment_time,service_service_id,event_event_id)
+VALUES (2, 1000, current_timestamp, 'description', true, false, 'CASH', 3000, '2020-05-12 12:00:00', 2,2);
 INSERT INTO public.contracts(
-    contract_id, deposit, deposit_payment_time, description, is_deposit_payed, is_price_payed, payment_method, price, price_payment_time, event_start_time, event_end_time, service_service_id)
-VALUES (3, 300, current_timestamp, 'description', false, false, 'CARD', 2300, '2020-05-12 12:00:00', '2020-05-10 10:00:00', '2020-05-11 06:00:00', 1);
+    contract_id, deposit, deposit_payment_time, description, is_deposit_payed, is_price_payed, payment_method, price, price_payment_time, service_service_id)
+VALUES (3, 300, current_timestamp, 'description', false, false, 'CARD', 2300, '2020-05-12 12:00:00', 1);

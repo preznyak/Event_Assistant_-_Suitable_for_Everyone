@@ -162,12 +162,17 @@ CREATE TABLE contracts (
     payment_method character varying(255),
     price integer,
     price_payment_time timestamp without time zone,
-    event_start_time timestamp without time zone,
-    event_end_time timestamp without time zone,
+    service_start_time timestamp without time zone,
+    service_end_time timestamp without time zone,
     service_service_id bigint,
+    event_event_id bigint,
     CONSTRAINT contracts_pkey PRIMARY KEY (contract_id),
     CONSTRAINT fk_c_service_service_id FOREIGN KEY (service_service_id)
         REFERENCES services(service_id)  MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_c_event_event_id FOREIGN KEY (event_event_id)
+        REFERENCES events(event_id)  MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
@@ -253,21 +258,6 @@ CREATE TABLE events_additional_cost_list (
         ON DELETE NO ACTION,
     CONSTRAINT fk_eacl_additional_cost_id FOREIGN KEY (additional_cost_list_additional_cost_id)
         REFERENCES additional_costs (additional_cost_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-);
-
-DROP TABLE IF EXISTS events_contract_list;
-CREATE TABLE events_contract_list (
-    event_event_id bigint NOT NULL,
-    contract_list_contract_id bigint NOT NULL,
-    CONSTRAINT uk_ecl_contract_id UNIQUE (contract_list_contract_id),
-    CONSTRAINT fk_ecl_contract_id FOREIGN KEY (contract_list_contract_id)
-        REFERENCES contracts (contract_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_ecl_event_id FOREIGN KEY (event_event_id)
-        REFERENCES events (event_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );

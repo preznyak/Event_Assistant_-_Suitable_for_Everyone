@@ -35,12 +35,15 @@ public class Contract implements Serializable {
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Event event;
+
     @OneToOne(fetch = FetchType.EAGER, cascade =  CascadeType.ALL)
     private Service service;
 
-    private LocalDateTime eventStartTime;
+    private LocalDateTime serviceStartTime;
 
-    private LocalDateTime eventEndTime;
+    private LocalDateTime serviceEndTime;
 
     //signature, documents,
 
@@ -128,20 +131,28 @@ public class Contract implements Serializable {
         this.service = service;
     }
 
-    public LocalDateTime getEventStartTime() {
-        return eventStartTime;
+    public LocalDateTime getServiceStartTime() {
+        return serviceStartTime;
     }
 
-    public void setEventStartTime(LocalDateTime eventStartTime) {
-        this.eventStartTime = eventStartTime;
+    public void setServiceStartTime(LocalDateTime serviceStartTime) {
+        this.serviceStartTime = serviceStartTime;
     }
 
-    public LocalDateTime getEventEndTime() {
-        return eventEndTime;
+    public LocalDateTime getServiceEndTime() {
+        return serviceEndTime;
     }
 
-    public void setEventEndTime(LocalDateTime eventEndTime) {
-        this.eventEndTime = eventEndTime;
+    public void setServiceEndTime(LocalDateTime serviceEndTime) {
+        this.serviceEndTime = serviceEndTime;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
     @Override
