@@ -17,6 +17,7 @@ public class Event implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_seq")
+    @Column(unique = true, nullable = false)
     private Long eventId;
 
     private String eventName;
@@ -25,9 +26,6 @@ public class Event implements Serializable {
 
     @OneToOne(fetch = FetchType.EAGER)
     private User user;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Contract> contractList;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private EventDetails eventDetails;
@@ -73,14 +71,6 @@ public class Event implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<Contract> getContractList() {
-        return contractList;
-    }
-
-    public void setContractList(List<Contract> contractList) {
-        this.contractList = contractList;
     }
 
     public EventDetails getEventDetails() {

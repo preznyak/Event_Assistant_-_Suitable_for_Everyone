@@ -4,6 +4,7 @@ import hu.charmanthere.ease.dao.entity.AdditionalCost;
 import hu.charmanthere.ease.dao.entity.Contract;
 import hu.charmanthere.ease.dao.entity.Event;
 import hu.charmanthere.ease.dao.enumeration.EventCategory;
+import hu.charmanthere.ease.dao.implementation.ContractDaoImpl;
 import hu.charmanthere.ease.dao.implementation.EventDaoImpl;
 import hu.charmanthere.ease.exception.EventWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.util.BudgetCalculator;
@@ -16,10 +17,12 @@ import java.util.List;
 @Service
 public class EventService {
     public EventDaoImpl eventDao;
+    public ContractDaoImpl contractDao;
 
     @Autowired
-    public EventService(EventDaoImpl eventDao) {
+    public EventService(EventDaoImpl eventDao, ContractDaoImpl contractDao) {
         this.eventDao = eventDao;
+        this.contractDao = contractDao;
     }
 
     public List<Event> findAllEvent() {
@@ -54,7 +57,7 @@ public class EventService {
 
     public Double getEventBudgetByEventId(Long id) throws EventWithIdDoesNotExistException {
         Event searchedEvent = eventDao.findById(id);
-        List<Contract> contracts = searchedEvent.getContractList();
+        List<Contract> contracts = contractDao.findAllByEvent(searchedEvent);
         Integer sumContractPrices = 0;
         if(!contracts.isEmpty()){
             sumContractPrices = contracts.stream().map(c -> c.getPrice()).mapToInt(Integer::intValue).sum();
@@ -69,13 +72,13 @@ public class EventService {
 
     public Double getRemainingAmountFromEventBudgetByEventId(Long id) throws EventWithIdDoesNotExistException {
         Event searchedEvent = eventDao.findById(id);
-        List<Contract> contracts = searchedEvent.getContractList();
+        List<Contract> contracts = contractDao.findAllByEvent(searchedEvent);
         return BudgetCalculator.getRemainingAmountFromEventBudget(contracts);
     }
 
     public Double getPaidAmountFromEventBudgetByEventId(Long id) throws EventWithIdDoesNotExistException {
         Event searchedEvent = eventDao.findById(id);
-        List<Contract> contracts = searchedEvent.getContractList();
+        List<Contract> contracts = contractDao.findAllByEvent(searchedEvent);
         List<AdditionalCost> additionalCosts = searchedEvent.getAdditionalCostList();
         return BudgetCalculator.getPaidAmountFromEventBudget(contracts, additionalCosts);
     }

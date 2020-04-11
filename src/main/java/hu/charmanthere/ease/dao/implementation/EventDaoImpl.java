@@ -47,7 +47,6 @@ public class EventDaoImpl implements EventDaoInterface {
             System.out.println("Event with id : " +eventId+ " does not exist!");
             throw new EventWithIdDoesNotExistException("Event with id : " +eventId+ " does not exist!");
         }
-        eventToBeUpdated.setContractList(event.getContractList());
         eventToBeUpdated.setEventCategory(event.getEventCategory());
         eventToBeUpdated.setEventDetails(event.getEventDetails());
         eventToBeUpdated.setEventName(event.getEventName());

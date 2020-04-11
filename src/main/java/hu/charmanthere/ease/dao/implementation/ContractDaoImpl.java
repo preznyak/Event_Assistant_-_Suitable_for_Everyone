@@ -1,12 +1,14 @@
 package hu.charmanthere.ease.dao.implementation;
 
 import hu.charmanthere.ease.dao.entity.Contract;
+import hu.charmanthere.ease.dao.entity.Event;
 import hu.charmanthere.ease.dao.inteface.ContractDaoInterface;
 import hu.charmanthere.ease.dao.repository.ContractRepositoryInterface;
 import hu.charmanthere.ease.exception.ContractWithIdDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -54,5 +56,21 @@ public class ContractDaoImpl implements ContractDaoInterface {
 
     public void deleteById(Long contractId) {
         contractRepositoryInterface.deleteById(contractId);
+    }
+
+    @Override
+    public List<Contract> findAllByEvent(Event event) {
+        if(event != null){
+            return contractRepositoryInterface.findAllByEvent(event);
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public List<Contract> findAllByService(hu.charmanthere.ease.dao.entity.Service service) {
+        if(service != null){
+            return contractRepositoryInterface.findAllByService(service);
+        }
+        return new ArrayList<>();
     }
 }
