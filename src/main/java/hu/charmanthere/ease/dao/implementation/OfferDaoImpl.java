@@ -46,4 +46,24 @@ public class OfferDaoImpl implements OfferDaoInterface {
     public void deleteById(Long id){
         offerRepositoryInterface.deleteById(id);
     }
+
+    @Override
+    public List<Offer> findAllByService_ServiceId(Long id) {
+        return offerRepositoryInterface.findAllByService_ServiceId(id);
+    }
+
+    @Override
+    public List<Offer> findAllByEvent_EventId(Long id) {
+        return offerRepositoryInterface.findAllByEvent_EventId(id);
+    }
+
+    @Override
+    public List<Offer> findAllByIsOfferAcceptedAndEvent_EventId(boolean isAccepted, Long id) {
+        return offerRepositoryInterface.findAllByIsOfferAcceptedAndEvent_EventId(isAccepted, id);
+    }
+
+    @Override
+    public List<Offer> findAllByIsOfferAcceptedAndService_ServiceId(boolean isAccepted, Long id) {
+        return offerRepositoryInterface.findAllByIsOfferAcceptedAndService_ServiceId(isAccepted, id);
+    }
 }
