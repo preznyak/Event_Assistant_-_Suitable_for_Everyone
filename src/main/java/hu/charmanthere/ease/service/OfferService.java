@@ -32,4 +32,20 @@ public class OfferService {
     public void deleteById(Long id) {
         offerDao.deleteById(id);
     }
+
+    public List<Offer> findAllByService_ServiceId(Long id){
+        return offerDao.findAllByService_ServiceId(id);
+    }
+
+    public List<Offer> findAllByEvent_EventId(Long id){
+        return offerDao.findAllByEvent_EventId(id);
+    }
+
+    public List<Offer> findAllByIsOfferAcceptedAndEvent_EventId(boolean isAccepted, Long id){
+        return offerDao.findAllByIsOfferAcceptedAndEvent_EventId(isAccepted, id);
+    }
+
+    public List<Offer> findAllByIsOfferAcceptedAndService_ServiceId(boolean isAccepted, Long id){
+        return offerDao.findAllByIsOfferAcceptedAndService_ServiceId(isAccepted, id);
+    }
 }

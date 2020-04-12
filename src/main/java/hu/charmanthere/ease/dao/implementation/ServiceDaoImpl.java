@@ -6,6 +6,7 @@ import hu.charmanthere.ease.dao.enumeration.ServiceCategory;
 import hu.charmanthere.ease.dao.inteface.ServiceDaoInterface;
 import hu.charmanthere.ease.dao.repository.ContractRepositoryInterface;
 import hu.charmanthere.ease.dao.repository.ServiceRepositoryInterface;
+import hu.charmanthere.ease.dao.repository.UserRepositoryInterface;
 import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,13 @@ public class ServiceDaoImpl implements ServiceDaoInterface {
 
     private ServiceRepositoryInterface serviceRepositoryInterface;
     private ContractRepositoryInterface contractRepositoryInterface;
+    private UserRepositoryInterface userRepositoryInterface;
 
     @Autowired
-    public ServiceDaoImpl(ServiceRepositoryInterface serviceRepositoryInterface, ContractRepositoryInterface contractRepositoryInterface) {
+    public ServiceDaoImpl(ServiceRepositoryInterface serviceRepositoryInterface, ContractRepositoryInterface contractRepositoryInterface, UserRepositoryInterface userRepositoryInterface) {
         this.serviceRepositoryInterface = serviceRepositoryInterface;
         this.contractRepositoryInterface = contractRepositoryInterface;
+        this.userRepositoryInterface = userRepositoryInterface;
     }
 
     public void deleteById(Long id){
@@ -92,6 +95,11 @@ public class ServiceDaoImpl implements ServiceDaoInterface {
     @Override
     public List<Contract> getContractsByServiceId(Long id) {
         return contractRepositoryInterface.findAllByService_ServiceId(id);
+    }
+
+    @Override
+    public List<hu.charmanthere.ease.dao.entity.Service> findServiceByUserId(Long id) {
+        return serviceRepositoryInterface.findServiceByUser_UserId(id);
     }
 
 

@@ -11,4 +11,5 @@ import java.util.List;
 public interface ServiceRepositoryInterface extends JpaRepository<Service, Long> {
     public List<Service> findServiceByServiceCategory(ServiceCategory category);
     public List<Service> findServiceByAddresses_City(String city);
+    public List<Service> findServiceByUser_UserId(Long id);
 }

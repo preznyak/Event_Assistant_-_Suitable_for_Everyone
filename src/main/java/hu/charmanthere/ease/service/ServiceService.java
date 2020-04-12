@@ -1,5 +1,7 @@
 package hu.charmanthere.ease.service;
 
+import hu.charmanthere.ease.dao.entity.Address;
+import hu.charmanthere.ease.dao.entity.Contact;
 import hu.charmanthere.ease.dao.entity.Contract;
 import hu.charmanthere.ease.dao.entity.Service;
 import hu.charmanthere.ease.dao.enumeration.ServiceCategory;
@@ -52,5 +54,25 @@ public class ServiceService {
 
     public List<Contract> getContractsByServiceId(Long id) {
        return serviceDao.getContractsByServiceId(id);
+    }
+
+    public List<hu.charmanthere.ease.dao.entity.Service> findServiceByUserId(Long id){
+        return serviceDao.findServiceByUserId(id);
+    }
+
+    public void addAddressToService(Address address, Long serviceId) throws ServiceWithIdDoesNotExistException {
+        Service service = serviceDao.findById(serviceId);
+        List<Address> addresses = service.getAddresses();
+        addresses.add(address);
+        service.setAddresses(addresses);
+        update(serviceId,service);
+    }
+
+    public void addContactToService(Contact contact, Long serviceId) throws ServiceWithIdDoesNotExistException {
+        Service service = serviceDao.findById(serviceId);
+        List<Contact> contacts = service.getContacts();
+        contacts.add(contact);
+        service.setContacts(contacts);
+        update(serviceId,service);
     }
 }

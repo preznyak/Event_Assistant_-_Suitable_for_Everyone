@@ -45,4 +45,24 @@ public class OfferController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/event/{id}")
+    public ResponseEntity<?> findAllByEventId(@PathVariable Long id) {
+        return new ResponseEntity<>(offerService.findAllByEvent_EventId(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/service/{id}")
+    public ResponseEntity<?> findAllByServiceId(@PathVariable Long id) {
+        return new ResponseEntity<>(offerService.findAllByService_ServiceId(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/isAccepted/event/{id}")
+    public ResponseEntity<?> findAllByIsAcceptedAndEventId(@PathVariable Long id, @RequestParam("isAccepted") boolean isAccepted) {
+        return new ResponseEntity<>(offerService.findAllByIsOfferAcceptedAndEvent_EventId(isAccepted, id), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/isAccepted/service/{id}")
+    public ResponseEntity<?> findAllByIsAcceptedAndServiceId(@PathVariable Long id, @RequestParam("isAccepted") boolean isAccepted) {
+        return new ResponseEntity<>(offerService.findAllByIsOfferAcceptedAndService_ServiceId(isAccepted, id), HttpStatus.OK);
+    }
 }

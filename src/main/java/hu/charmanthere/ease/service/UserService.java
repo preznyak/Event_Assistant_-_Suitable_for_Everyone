@@ -2,17 +2,18 @@ package hu.charmanthere.ease.service;
 
 import hu.charmanthere.ease.controller.model.user.UserListModel;
 import hu.charmanthere.ease.controller.model.user.UserModel;
+import hu.charmanthere.ease.dao.entity.Address;
+import hu.charmanthere.ease.dao.entity.Contact;
 import hu.charmanthere.ease.dao.entity.User;
 import hu.charmanthere.ease.dao.implementation.UserDaoImpl;
+import hu.charmanthere.ease.exception.UserAlreadyHasContactException;
 import hu.charmanthere.ease.exception.UserValidationException;
 import hu.charmanthere.ease.exception.UserWithEmailDoesNotExistException;
 import hu.charmanthere.ease.exception.UserWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.converter.UserModelConverter;
-import hu.charmanthere.ease.service.validators.UserRegistrationValidator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.Validator;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -110,5 +111,23 @@ public class UserService {
         validateUserModel(userModel);
         User user = userModelConverter.fromUserModel(userModel);
         userDao.save(user);
+    }
+
+    public void addAddressToUser(Address address, Long userId) throws UserWithIdDoesNotExistException {
+        User user = userDao.findById(userId);
+        List<Address> addresses = user.getUserDetails().getAddressList();
+        addresses.add(address);
+        user.getUserDetails().setAddressList(addresses);
+        update(userId, user);
+    }
+
+    public void addContactToUser(Contact contact, Long userId) throws UserWithIdDoesNotExistException, UserAlreadyHasContactException {
+        User user = userDao.findById(userId);
+        if(user.getUserDetails().getContact()==null) {
+            user.getUserDetails().setContact(contact);
+        } else {
+            throw new UserAlreadyHasContactException("You already have a contact, please update it instead of adding.");
+        }
+        update(userId, user);
     }
 }
