@@ -1,6 +1,7 @@
 package hu.charmanthere.ease.controller;
 
 import hu.charmanthere.ease.dao.entity.Address;
+import hu.charmanthere.ease.dao.entity.Contact;
 import hu.charmanthere.ease.dao.entity.Contract;
 import hu.charmanthere.ease.dao.entity.Service;
 import hu.charmanthere.ease.dao.enumeration.ServiceCategory;
@@ -99,6 +100,16 @@ public class ServiceController {
             serviceService.addAddressToService(address, serviceId);
         } catch (ServiceWithIdDoesNotExistException e) {
            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/add/contact")
+    public ResponseEntity<?> addContactToService(@RequestBody Contact contact, @RequestParam("serviceId") Long serviceId){
+        try {
+            serviceService.addContactToService(contact, serviceId);
+        } catch (ServiceWithIdDoesNotExistException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
