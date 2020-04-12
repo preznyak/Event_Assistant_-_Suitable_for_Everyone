@@ -238,3 +238,12 @@ VALUES (2, 1000, current_timestamp, 'description', true, false, 'CASH', 3000, '2
 INSERT INTO public.contracts(
     contract_id, deposit, deposit_payment_time, description, is_deposit_payed, is_price_payed, payment_method, price, price_payment_time, service_service_id)
 VALUES (3, 300, current_timestamp, 'description', false, false, 'CARD', 2300, '2020-05-12 12:00:00', 1);
+
+INSERT INTO public.offers(offer_id, deposit, deposit_payment_time, description, is_offer_accepted, payment_method, price, price_payment_time, event_event_id, service_service_id)
+VALUES (1, 50, current_timestamp, 'description', false,'CASH', 250, '2020-05-12 12:00:00', 3,1);
+INSERT INTO public.offers(offer_id, deposit, deposit_payment_time, description, is_offer_accepted, payment_method, price, price_payment_time, event_event_id, service_service_id)
+VALUES (2, 70, current_timestamp, 'description', false,'CASH', 390, '2020-04-12 00:00:00', 2,3);
+INSERT INTO public.offers(offer_id, deposit, deposit_payment_time, description, is_offer_accepted, payment_method, price, price_payment_time, event_event_id, service_service_id)
+VALUES (3, 300, current_timestamp, 'description', false,'CASH', 1200, '2020-04-06 07:00:00', 1,1);
+INSERT INTO public.offers(offer_id, deposit, deposit_payment_time, description, is_offer_accepted, payment_method, price, price_payment_time, event_event_id, service_service_id)
+VALUES (4, 520, current_timestamp, 'description', false,'CASH', 2480, '2021-02-24 16:00:00', 2,1);
