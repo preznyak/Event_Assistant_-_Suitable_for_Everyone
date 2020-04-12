@@ -8,10 +8,16 @@ import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
 import java.util.List;
 
 public interface ServiceDaoInterface {
+
     List<Service> findServicesByCategory(ServiceCategory category);
+
     List<Service> findServicesByLocality(String locality);
+
     hu.charmanthere.ease.dao.entity.Service findById(Long id) throws ServiceWithIdDoesNotExistException;
+
     void rateServiceById(Long id, int rating) throws ServiceWithIdDoesNotExistException;
 
     List<Contract> getContractsByServiceId(Long id);
+
+    List<Service> findServiceByUserId(Long id);
 }

@@ -86,4 +86,9 @@ public class ServiceController {
         return new ResponseEntity<>(contracts, HttpStatus.OK);
 
     }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/find/user/{id}")
+    public ResponseEntity<?> findServicesByCategory(@PathVariable Long id) {
+        return new ResponseEntity<>(serviceService.findServiceByUserId(id), HttpStatus.OK);
+    }
 }

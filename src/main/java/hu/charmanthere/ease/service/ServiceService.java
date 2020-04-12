@@ -53,4 +53,8 @@ public class ServiceService {
     public List<Contract> getContractsByServiceId(Long id) {
        return serviceDao.getContractsByServiceId(id);
     }
+
+    public List<hu.charmanthere.ease.dao.entity.Service> findServiceByUserId(Long id){
+        return serviceDao.findServiceByUserId(id);
+    }
 }
