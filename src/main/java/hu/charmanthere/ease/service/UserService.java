@@ -2,6 +2,7 @@ package hu.charmanthere.ease.service;
 
 import hu.charmanthere.ease.controller.model.user.UserListModel;
 import hu.charmanthere.ease.controller.model.user.UserModel;
+import hu.charmanthere.ease.dao.entity.Address;
 import hu.charmanthere.ease.dao.entity.User;
 import hu.charmanthere.ease.dao.implementation.UserDaoImpl;
 import hu.charmanthere.ease.exception.UserValidationException;
@@ -110,5 +111,13 @@ public class UserService {
         validateUserModel(userModel);
         User user = userModelConverter.fromUserModel(userModel);
         userDao.save(user);
+    }
+
+    public void addAddressToUser(Address address, Long userId) throws UserWithIdDoesNotExistException {
+        User user = userDao.findById(userId);
+        List<Address> addresses = user.getUserDetails().getAddressList();
+        addresses.add(address);
+        user.getUserDetails().setAddressList(addresses);
+        update(userId, user);
     }
 }

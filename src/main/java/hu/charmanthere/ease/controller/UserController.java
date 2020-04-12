@@ -1,7 +1,9 @@
 package hu.charmanthere.ease.controller;
 
 import hu.charmanthere.ease.controller.model.user.UserModel;
+import hu.charmanthere.ease.dao.entity.Address;
 import hu.charmanthere.ease.dao.entity.User;
+import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
 import hu.charmanthere.ease.exception.UserValidationException;
 import hu.charmanthere.ease.exception.UserWithEmailDoesNotExistException;
 import hu.charmanthere.ease.exception.UserWithIdDoesNotExistException;
@@ -82,6 +84,16 @@ public class UserController {
         } catch (UserWithIdDoesNotExistException e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.OK);
         }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/add/address")
+    public ResponseEntity<?> addAddressToUser(@RequestBody Address address, @RequestParam("userId") Long userId){
+        try {
+            userService.addAddressToUser(address, userId);
+        } catch (UserWithIdDoesNotExistException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
