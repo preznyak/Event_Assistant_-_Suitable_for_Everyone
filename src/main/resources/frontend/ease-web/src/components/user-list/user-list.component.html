@@ -3,18 +3,20 @@
     <table class="table table-bordered table-striped">
       <thead class="thead-dark">
       <tr>
-        <th scope="col">ServiceOwner</th>
-        <th scope="col">lastLoginDate</th>
-        <th scope="col">Password</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Registration Date</th>
         <th scope="col">Email</th>
+        <th scope="col">City</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let user of users">
-        <td>{{ user.serviceOwner }}</td>
-        <td>{{ user.lastLoginDate }}</td>
-        <td>{{ user.password }}</td>
+        <td>{{ user.userDetails.lastName }}</td>
+        <td>{{ user.userDetails.firstName }}</td>
+        <td>{{ user.userDetails.registrationDate }}</td>
         <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+        <td>{{ user.userDetails.addressList[0].city }}</td>
       </tr>
       </tbody>
     </table>
