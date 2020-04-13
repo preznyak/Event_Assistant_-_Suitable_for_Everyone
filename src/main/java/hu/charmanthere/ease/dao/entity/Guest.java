@@ -11,6 +11,7 @@ public class Guest implements Serializable {
 
     private static final long serialVersionUID = 123846L;
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "guest_seq")
     private Long guestId;

@@ -3,6 +3,7 @@ package hu.charmanthere.ease.service;
 import hu.charmanthere.ease.dao.entity.AdditionalCost;
 import hu.charmanthere.ease.dao.entity.Contract;
 import hu.charmanthere.ease.dao.entity.Event;
+import hu.charmanthere.ease.dao.entity.Guest;
 import hu.charmanthere.ease.dao.enumeration.EventCategory;
 import hu.charmanthere.ease.dao.implementation.ContractDaoImpl;
 import hu.charmanthere.ease.dao.implementation.EventDaoImpl;
@@ -81,5 +82,13 @@ public class EventService {
         List<Contract> contracts = contractDao.findAllByEvent(searchedEvent);
         List<AdditionalCost> additionalCosts = searchedEvent.getAdditionalCostList();
         return BudgetCalculator.getPaidAmountFromEventBudget(contracts, additionalCosts);
+    }
+
+    public void addGuestToEvent(Guest guest, Long eventId) throws EventWithIdDoesNotExistException {
+        Event event = eventDao.findById(eventId);
+        List<Guest> guests = event.getEventDetails().getGuestList();
+        guests.add(guest);
+        event.getEventDetails().setGuestList(guests);
+        eventDao.update(eventId, event);
     }
 }
