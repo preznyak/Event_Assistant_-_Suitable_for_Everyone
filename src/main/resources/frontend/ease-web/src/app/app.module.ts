@@ -1,16 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { UserListComponent } from "../components/user-list/user-list.component";
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {UserListComponent} from "../components/user-list/user-list.component";
 import {UserService} from "../service/user/user.service";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
-import { EventListComponent } from '../components/event-list/event-list.component';
-import { ServiceListComponent } from '../components/service-list/service-list.component';
+import {EventListComponent} from '../components/event-list/event-list.component';
+import {ServiceListComponent} from '../components/service-list/service-list.component';
 import {EventService} from "../service/event/event.service";
 import {ServiceService} from "../service/service/service.service";
+import {UserCreateComponent} from "../components/user-create/user-create.component";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {ServiceService} from "../service/service/service.service";
     UserListComponent,
     EventListComponent,
     ServiceListComponent,
+    UserCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import {ServiceService} from "../service/service/service.service";
     HttpClientModule,
     FormsModule
   ],
-  providers: [UserService,EventService,ServiceService],
+  providers: [UserService, EventService, ServiceService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
