@@ -1,7 +1,9 @@
 export class Contact {
-  contactId: string;
-  name: string;
-  phoneNumber: string;
-  email: string;
-  facebookLink: string;
+  constructor(public contactId: string,
+              public name: string,
+              public phoneNumber: string,
+              public  email: string,
+              public  facebookLink: string) {
+  }
 }
+

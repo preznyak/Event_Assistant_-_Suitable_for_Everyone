@@ -1,7 +1,8 @@
 export class AdditionalCost {
-  additionalCostId: string;
-  price: number;
-  name: string;
-  description: string;
-  date: Date;
+  constructor(public additionalCostId: string,
+              public price: number,
+              public name: string,
+              public  description: string,
+              public  date: Date) {
+  }
 }
