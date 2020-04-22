@@ -1,10 +1,51 @@
-import {User} from "../user/user";
-
 export class Article {
-  articleId: string;
-  title: string;
-  content: string;
-  youtubeLink: string;
-  user: User;
-  creationTime: Date;
+  constructor(public articleId: string,
+              public title: string,
+              public content: string,
+              public youtubeLink: string,
+              public user: User,
+              public creationTime: Date) {
+  }
+}
+
+export class User {
+  constructor(public userId: string,
+              public email: string,
+              public password: string,
+              public lastLoginDate: string,
+              public serviceOwner: string,
+              public userDetails: UserDetails) {
+  }
+}
+
+export class UserDetails {
+  constructor(public userDetailsId: string,
+              public firstName: string,
+              public lastName: string,
+              public registrationDate: Date,
+              public birthDay: Date,
+              public preferences: string,
+              public addressList: Address[],
+              public contact: Contact) {
+  }
+}
+
+export class Address {
+  constructor(public addressId: string,
+              public houseNumber: string,
+              public streetName: string,
+              public city: string,
+              public state: string,
+              public zipCode: string,
+              public country: string) {
+  }
+}
+
+export class Contact {
+  constructor(public contactId: string,
+              public name: string,
+              public phoneNumber: string,
+              public email: string,
+              public facebookLink: string) {
+  }
 }
