@@ -1,8 +1,11 @@
 package hu.charmanthere.ease.controller;
 
+import hu.charmanthere.ease.dao.entity.Contact;
 import hu.charmanthere.ease.dao.entity.Event;
+import hu.charmanthere.ease.dao.entity.Guest;
 import hu.charmanthere.ease.dao.enumeration.EventCategory;
 import hu.charmanthere.ease.exception.EventWithIdDoesNotExistException;
+import hu.charmanthere.ease.exception.ServiceWithIdDoesNotExistException;
 import hu.charmanthere.ease.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -92,5 +95,15 @@ public class EventController {
         } catch (EventWithIdDoesNotExistException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "/add/guest")
+    public ResponseEntity<?> addGuestToEvent(@RequestBody Guest guest, @RequestParam("eventId") Long eventId){
+        try {
+            eventService.addGuestToEvent(guest, eventId);
+        } catch (EventWithIdDoesNotExistException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

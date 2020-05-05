@@ -75,4 +75,9 @@ public class ContractController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, value = "/get/exchangeRate/today")
+    public ResponseEntity<?> findAllByServiceId(){
+            return new ResponseEntity<>(contractService.getExchangeRateToday(), HttpStatus.OK);
+    }
 }
